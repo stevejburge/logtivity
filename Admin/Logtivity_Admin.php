@@ -47,7 +47,7 @@ class Logtivity_Admin
 	{
 		if (!wp_verify_nonce( $_POST['logtivity_update_settings'], 'logtivity_update_settings' )) 
 		{
-		    wp_safe_redirect( wp_get_referer() );
+		    wp_safe_redirect( $this->settingsPageUrl() );
 
 			return;
 		}
@@ -55,14 +55,24 @@ class Logtivity_Admin
 		$user = new Logtivity_Wp_User;
 
 		if (!$user->hasRole('administrator')) {
-		    wp_safe_redirect( wp_get_referer() );
+		    wp_safe_redirect( $this->settingsPageUrl() );
 
 			return;
 		}
 
 		$this->options->update($_POST);
 		
-	    wp_safe_redirect( wp_get_referer() );
+	    wp_safe_redirect( $this->settingsPageUrl() );
+	}
+
+	/**
+	 * Get the url to the settings page
+	 * 
+	 * @return string
+	 */
+	public function settingsPageUrl()
+	{
+		return admin_url('tools.php?page=logtivity');
 	}
 
 }
