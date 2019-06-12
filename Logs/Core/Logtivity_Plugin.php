@@ -13,7 +13,7 @@ class Logtivity_Plugin extends Logtivity_Abstract_Logger
 
 	public function pluginActivated($plugin, $network_wide)
 	{
-		return Logtivity_Logger::log('Plugin Activated. ' . $plugin, [
+		return Logtivity_Logger::log('Plugin Activated. [' . $plugin . ']', [
 			'key' => 'network_wide',
 			'value' => $network_wide
 		]);
@@ -21,7 +21,7 @@ class Logtivity_Plugin extends Logtivity_Abstract_Logger
 
 	public function pluginDeactivated($plugin, $network_deactivating)
 	{
-		return Logtivity_Logger::log('Plugin Deactivated. ' . $plugin, [
+		return Logtivity_Logger::log('Plugin Deactivated. [' . $plugin . ']', [
 			'key' => 'network_deactivating',
 			'value' => $network_deactivating
 		]);
@@ -30,7 +30,7 @@ class Logtivity_Plugin extends Logtivity_Abstract_Logger
 	public function pluginDeleted($plugin_file, $deleted)
 	{
 		return Logtivity_Logger::log()
-					->setAction('Plugin Deleted')
+					->setAction('Plugin Deleted. [' . $plugin_file . ']')
 					->addMeta('Plugin Name', $plugin_file)
 					->addMeta('Deletion Successful', $deleted)
 					->send();
@@ -72,7 +72,7 @@ class Logtivity_Plugin extends Logtivity_Abstract_Logger
 			$data = get_plugin_data( WP_PLUGIN_DIR . '/' . $slug, true, false );
 			
 			Logtivity_Logger::log()
-				->setAction('Plugin Updated.')
+				->setAction('Plugin Updated. [' . $data['Name'] . ']')
 				->addMeta('Plugin Name', $data['Name'])
 				->addMeta('Version', ( isset($data['Version']) ? $data['Version'] : 'Not set'))
 				->addMeta('Bulk', $options['bulk'])
@@ -92,7 +92,7 @@ class Logtivity_Plugin extends Logtivity_Abstract_Logger
 		$data = get_plugin_data( $upgrader_object->skin->result['local_destination'] . '/' . $path, true, false );
 		
 		return Logtivity_Logger::log()
-					->setAction('Plugin Installed')
+					->setAction('Plugin Installed. [' . $data['Name'] . ']')
 					->addMeta('Plugin Name', $data['Name'])
 					->addMeta('Version', $data['Version'])
 					->send();

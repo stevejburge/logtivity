@@ -31,6 +31,13 @@ class Logtivity_Logger extends Logtivity_Log_API
 	public $meta = [];
 
 	/**	
+	 * Extra user meta to pass to the log
+	 * 
+	 * @var array
+	 */
+	public $userMeta = [];
+
+	/**	
 	 * Allow the overriding of async posting on a per log basis. Gives us the ability 
 	 * to turn it off for certain logs that don't support async. eg. logout
 	 * 
@@ -102,6 +109,20 @@ class Logtivity_Logger extends Logtivity_Log_API
 	}
 
 	/**
+	 * Add to an array of user meta you would like to pass to this log.
+	 * 
+	 * @param string $key
+	 * @param mixed $value
+	 * @return $this
+	 */
+	public function addUserMeta($key, $value)
+	{
+		$this->userMeta[$key] = $value;
+
+		return $this;
+	}
+
+	/**
 	 * Set whether this log is going to be posted asynchronously or not
 	 * 
 	 * @param  boolean $value
@@ -133,6 +154,8 @@ class Logtivity_Logger extends Logtivity_Log_API
 	 */
 	public function send()
 	{
+		$this->maybeAddProfileLink();
+
 		do_action('wp_logtivity_instance', $this);
 
 		if (!$this->active) {
@@ -221,9 +244,7 @@ class Logtivity_Logger extends Logtivity_Log_API
 	 */
 	public function getUserMeta()
 	{
-		return apply_filters('wp_logtivity_get_user_meta', [
-			'profile_link' => $this->maybeGetUsersProfileLink()
-		]);
+		return apply_filters('wp_logtivity_get_user_meta', $this->userMeta);
 	}
 
 	/**
@@ -241,13 +262,13 @@ class Logtivity_Logger extends Logtivity_Log_API
 	 * 
 	 * @return string|false
 	 */
-	protected function maybeGetUsersProfileLink()
+	protected function maybeAddProfileLink()
 	{
 		if (!$this->options->shouldStoreProfileLink()) {
-			return false;
+			return;
 		}
 
-		return $this->user->profileLink();
+		return $this->addUserMeta('Profile Link', $this->user->profileLink());
 	}
 
 	/**
@@ -258,7 +279,7 @@ class Logtivity_Logger extends Logtivity_Log_API
 	protected function maybeGetUsersUsername()
 	{
 		if (!$this->options->shouldStoreUsername()) {
-			return false;
+			return null;
 		}
 
 		return $this->user->userLogin();

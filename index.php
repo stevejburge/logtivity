@@ -25,7 +25,6 @@ class Logtivity_Log_Plugin
 		'Vendor/Background_Processing/Logtivity_Async_Request',
 		'Jobs/Store_Log',
 		'Services/Logtivity_Log_API',
-		'Services/Logtivity_Log_API',
 		'Services/Logtivity_Logger',
 		'Helpers/Logtivity_Log_Global_Function',
 		/**

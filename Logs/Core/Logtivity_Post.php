@@ -32,7 +32,7 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 	public function postWasPublished($post)
 	{
 		return Logtivity_Logger::log()
-			->setAction($this->getPostTypeLabel($post->ID) . ' was published. "' . $post->post_title . '"')
+			->setAction($this->getPostTypeLabel($post->ID) . ' Published. [' . $post->post_title . ']')
 			->addMeta('Post ID', $post->ID)
 			->addMeta('Post Type', $post->post_type)
 			->addMeta('Post Status', $post->post_status)
@@ -51,7 +51,7 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 	public function postWasUpdated($post, $old_status)
 	{
 		return Logtivity_Logger::log()
-			->setAction($this->getPostTypeLabel($post->ID) . ' was updated.')
+			->setAction($this->getPostTypeLabel($post->ID) . ' Updated. [' . $post->post_title . ']')
 			->addMeta('Post ID', $post->ID)
 			->addMeta('Post Title', $post->post_title)
 			->addMeta('Post Type', $post->post_type)
@@ -67,7 +67,7 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 		}
 		
 		return Logtivity_Logger::log()
-			->setAction($this->getPostTypeLabel($post_id) . ' was trashed. "' . get_the_title($post_id) . '"')
+			->setAction($this->getPostTypeLabel($post_id) . ' Trashed. [' . get_the_title($post_id) . ']')
 			->addMeta('Post ID', $post_id)
 			->addMeta('Post Type', get_post_type($post_id))
 			->addMeta('Post Title', get_the_title($post_id))
@@ -78,7 +78,7 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 	{
 		return Logtivity_Logger::log()
 			->setAction(
-				$this->getPostTypeLabel($post->ID) . ' was restored from trash. "' . $post->post_title . '"'
+				$this->getPostTypeLabel($post->ID) . ' Restored from Trash. [' . $post->post_title . ']'
 			)
 			->addMeta('Post ID', $post->ID)
 			->addMeta('Post Type', $post->post_type)
@@ -92,13 +92,13 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 			return;
 		}
 
-		if ($this->ignoringPostTitle($post->post_title)) {
+		if ($this->ignoringPostTitle(get_the_title($post_id))) {
 			return;
 		}
 
 		return Logtivity_Logger::log()
 			->setAction(
-				$this->getPostTypeLabel($post_id) . ' was permenantly deleted. "' . get_the_title($post_id) . '"'
+				$this->getPostTypeLabel($post_id) . ' Permenantly Deleted. [' . get_the_title($post_id) . ']'
 			)
 			->addMeta('Post ID', $post_id)
 			->addMeta('Post Type', get_post_type($post_id))
@@ -109,7 +109,7 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 	public function mediaUploaded($upload, $context)
 	{
 		Logtivity_Logger::log()
-			->setAction('Attachment was uploaded.')
+			->setAction('Attachment Uploaded')
 			->addMeta('File', $upload['file'])
 			->addMeta('Url', $upload['url'])
 			->addMeta('Type', $upload['type'])
@@ -134,7 +134,7 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 		if ($post_id) {
 			
 			Logtivity_Logger::log()
-				->setAction('Attachment meta was updated.')
+				->setAction('Attachment Meta Updated.')
 				->addMeta("Media ID", $post_id)
 				->send();
 

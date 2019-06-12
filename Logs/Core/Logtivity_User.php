@@ -30,7 +30,7 @@ class Logtivity_User extends Logtivity_Abstract_Logger
 	{
 		$user = new Logtivity_WP_User($user_id);
 
-		return Logtivity_Logger::log('User Created. Role: ' . $user->getRole(), [
+		return Logtivity_Logger::log('User Created. [Role: ' . $user->getRole() . ']', [
 			'key' => 'Username',
 			'value' => $user->userLogin()
 		]);
@@ -40,7 +40,7 @@ class Logtivity_User extends Logtivity_Abstract_Logger
 	{
 		$user = new Logtivity_WP_User($user_id);
 
-		return Logtivity_Logger::log('User Deleted. Role: ' . $user->getRole(), [
+		return Logtivity_Logger::log('User Deleted. [Role: ' . $user->getRole() . ']', [
 			'key' => 'Username',
 			'value' => $user->userLogin()
 		]);
@@ -50,7 +50,7 @@ class Logtivity_User extends Logtivity_Abstract_Logger
 	{
 		$user = new Logtivity_WP_User($user_id);
 
-		return Logtivity_Logger::log('Profile Updated. Role: ' . $user->getRole(), [
+		return Logtivity_Logger::log('Profile Updated. [Role: ' . $user->getRole() . ']', [
 			'key' => 'Username',
 			'value' => $user->userLogin()
 		]);
