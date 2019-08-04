@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: WP Logtivity
- * Plugin URI:  https://local.nettbiglog.vm
+ * Plugin URI:  https://logtivity.io
  * Description: A logging integration with Logtivity.io
  * Version:     0.1
  * Author:      Ralph Morris
@@ -40,6 +40,18 @@ class Logtivity_Log_Plugin
 		'Logs/Core/Logtivity_Plugin',
 	];
 
+	/**
+	 * List all integration dependancies
+	 * 
+	 * @var array
+	 */
+	private $integrationDependancies = [
+		'WP_DLM' => [
+			'Logs/Download_Monitor/Logtivity_Download_Monitor',
+		],
+	];
+
+
 	public function __construct()
 	{
 		$this->loadDependancies();
@@ -51,8 +63,28 @@ class Logtivity_Log_Plugin
 	{
 		foreach ($this->dependancies as $filePath) 
 		{
-			require_once plugin_dir_path( __FILE__ ) . $filePath .'.php';
+			$this->loadFile($filePath);
 		}
+
+		$this->loadIntegrationDependancies();
+	}
+
+	public function loadIntegrationDependancies()
+	{
+		foreach ($this->integrationDependancies as $key => $value) 
+		{
+			if (class_exists($key)) {
+				foreach ($value as $filePath) 
+				{
+					$this->loadFile($filePath);
+				}
+			}
+		}
+	}
+
+	public function loadFile($filePath)
+	{
+		require_once plugin_dir_path( __FILE__ ) . $filePath .'.php';
 	}
 
 	public function addSettingsLinkFromPluginsPage($links) 
