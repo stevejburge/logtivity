@@ -4,11 +4,41 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 {
 	public function __construct()
 	{
+		add_action('mepr-event-member-signup-completed', [$this, 'freeSubscriptionCreated']);
 		add_action('mepr-event-subscription-created', [$this, 'subscriptionCreated']);
 		add_action('mepr-event-subscription-paused', [$this, 'subscriptionPaused']);
 		add_action('mepr-event-subscription-resumed', [$this, 'subscriptionResumed']);
 		add_action('mepr-event-subscription-stopped', [$this, 'subscriptionStopped']);
 	}
+
+	public function freeSubscriptionCreated($event)
+	{
+		$user = $event->get_data();
+		$subscription = $this->getSubscription($user);
+		$product = $subscription->product();
+
+		if (!$subscription) {
+			return;
+		}
+
+		if ($subscription->gateway != 'free') {
+			return;			
+		}
+
+		return (new Logtivity_Logger($user->ID))
+						->setAction('Memberpress. Free Subscription Created')
+						->addMeta('Membership Product', $product->post_title)
+						->send();
+	}
+
+	protected function getSubscription($user)
+	{
+		foreach ($user->subscriptions() as $subscription) {
+			return $subscription;
+		}
+
+		return null;
+	}	
 
 	public function subscriptionCreated($event) 
 	{
