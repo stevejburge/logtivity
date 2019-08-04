@@ -4,42 +4,58 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 {
 	public function __construct()
 	{
-		add_action('mepr-txn-status-complete', [$this, 'transactionCompleted']);
+		add_action('mepr-event-subscription-created', [$this, 'subscriptionCreated']);
+		add_action('mepr-event-subscription-paused', [$this, 'subscriptionPaused']);
+		add_action('mepr-event-subscription-resumed', [$this, 'subscriptionResumed']);
+		add_action('mepr-event-subscription-stopped', [$this, 'subscriptionStopped']);
 	}
 
-	public function transactionCompleted($txn) 
+	public function subscriptionCreated($event) 
 	{
+		$subscription = $event->get_data();
+		$user = $subscription->user();
+		$product = $subscription->product();
+		$paymentMethod = $subscription->payment_method();
+
+		return (new Logtivity_Logger($user->ID))
+						->setAction('Memberpress. Subscription Created')
+						->addMeta('Transaction Total', $subscription->total)
+						->addMeta('Membership Product', $product->post_title)
+						->addMeta('Payment Method', $paymentMethod->name)
+						->send();
+	}
+
+	public function subscriptionPaused($event) 
+	{
+		$subscription = $event->get_data();
+		$product = $subscription->product();
+
 		return Logtivity_Logger::log()
-					->setAction('Memberpress Transation Complete.')
-					->send();
+						->setAction('Memberpress. Subscription Paused')
+						->addMeta('Membership Product', $product->post_title)
+						->send();
+	}
 
-		$user = new Logtivity_Wp_User;
+	public function subscriptionResumed($event) 
+	{
+		$subscription = $event->get_data();
+		$product = $subscription->product();
+	
+		return Logtivity_Logger::log()
+						->setAction('Memberpress. Subscription Resumed')
+						->addMeta('Membership Product', $product->post_title)
+						->send();
+	}
 
-		// if (!$user->isLoggedIn()) {
-		// 	return;
-		// }
+	public function subscriptionStopped($event) 
+	{
+		$subscription = $event->get_data();
+		$product = $subscription->product();
 
-		error_log('Logtivity User');
-		error_log(print_r($user, true));
-
-		//It's possible this could be a recurring transaction for a product the user is already subscribed to so probably use a user meta field described below
-		$memberpressUser = new MeprUser($txn->user_id); //A MeprUser object
-		$membership = new MeprProduct($txn->product_id); //A MeprProduct object
-		$users_memberships = $user->active_product_subscriptions('ids'); //An array of membership CPT ID's
-		
-		error_log('Memberpress User');
-		error_log(print_r($memberpressUser, true));
-		error_log('Memberpress Membership');
-		error_log(print_r($membership, true));
-		error_log('Users Memberships');
-		error_log(print_r($users_memberships, true));
-
-		// return Logtivity_Logger::log()
-		// 			->setAction('Memberpress Transation Complete. [' . $download->get_title() . ']')
-		// 			// ->addMeta('Download Title', $download->get_title())
-		// 			// ->addMeta('Download ID', $download->get_id())
-		// 			// ->addMeta('Download Count', $download->get_download_count())
-		// 			->send();
+		return Logtivity_Logger::log()
+						->setAction('Memberpress. Subscription Stopped')
+						->addMeta('Membership Product', $product->post_title)
+						->send();
 	}
 }
 

@@ -268,7 +268,13 @@ class Logtivity_Logger extends Logtivity_Log_API
 			return;
 		}
 
-		return $this->addUserMeta('Profile Link', $this->user->profileLink());
+		$profileLink = $this->user->profileLink();
+
+		if ($profileLink == '') {
+			return null;
+		}
+
+		return $this->addUserMeta('Profile Link', $profileLink);
 	}
 
 	/**
