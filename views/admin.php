@@ -56,7 +56,14 @@
 					<input type="checkbox" name="logtivity_should_post_asynchronously" id="logtivity_should_post_asynchronously" value="1" class="regular-checkbox" <?php echo ( absint($options['logtivity_should_post_asynchronously']) ? 'checked' : ''); ?>>
 				</td>
 				<td>
-					<span class="description">We recommend enabling this for optimisation. However this can be useful to disable for debugging.</span>
+					<span class="description">
+						We recommend enabling this for optimisation. However this can be useful to disable for debugging. Async may not work in certain dev/production environments. This can be because the hosts server doesn't resolve the domain in their hosts file. If this is the case you will need them to update the servers hosts file point the local IP address to your domain.
+						<br>
+						This setting might look like this.
+						<code>127.0.0.1 <?php echo sanitize_text_field($_SERVER['SERVER_NAME']); ?></code>
+						<br>
+						More information on this can be <a href="https://wordpress.org/support/topic/wp_remote_post-test-back-to-this-server-failed-response-was-curl-error-6/" target="_blank" rel="nofollow">found here</a>.
+					</span>
 				</td>
 			</tr>
 			<tr class="user-user-login-wrap">
