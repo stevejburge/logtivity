@@ -49,8 +49,10 @@ class Logtivity_Log_Plugin
 		'WP_DLM' => [
 			'Logs/Download_Monitor/Logtivity_Download_Monitor',
 		],
+		'MeprCtrlFactory' => [
+			'Logs/Memberpress/Logtivity_Memberpress',
+		]
 	];
-
 
 	public function __construct()
 	{
