@@ -15,7 +15,6 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 	{
 		$user = $event->get_data();
 		$subscription = $this->getSubscription($user);
-		$product = $subscription->product();
 
 		if (!$subscription) {
 			return;
@@ -24,6 +23,8 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 		if ($subscription->gateway != 'free') {
 			return;			
 		}
+		
+		$product = $subscription->product();
 
 		return (new Logtivity_Logger($user->ID))
 						->setAction('Memberpress. Free Subscription Created')
