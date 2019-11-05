@@ -81,7 +81,7 @@ class Logtivity_Wp_User
 
 	public function profileLink()
 	{
-		return get_edit_user_link( $this->id() );
+		return add_query_arg( 'user_id', $this->id(), self_admin_url( 'user-edit.php' ) );
 	}
 
 	/**
