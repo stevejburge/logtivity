@@ -27,12 +27,15 @@ class Logtivity_Log_Plugin
 		'Services/Logtivity_Log_API',
 		'Services/Logtivity_Logger',
 		'Helpers/Logtivity_Log_Global_Function',
-		/**
-		 *
-		 *	Log classes
-		 * 
-		 */
 		'Logs/Logtivity_Abstract_Logger',
+	];
+
+	/**
+	 *
+	 *	Log classes
+	 * 
+	 */
+	private $logClasses = [
 		'Logs/Core/Logtivity_Post',
 		'Logs/Core/Logtivity_User',
 		'Logs/Core/Logtivity_Core',
@@ -68,7 +71,31 @@ class Logtivity_Log_Plugin
 			$this->loadFile($filePath);
 		}
 
+		$this->maybeLoadLogClasses();
+
 		$this->loadIntegrationDependancies();
+	}
+
+	public function maybeLoadLogClasses()
+	{
+		if ($this->defaultLoggingDisabled()) {
+			return;
+		}
+
+		foreach ($this->logClasses as $filePath) 
+		{
+			$this->loadFile($filePath);
+		}
+	}
+
+	/**
+	 * Is the default Event logging from within the plugin enabled
+	 * 
+	 * @return bool
+	 */
+	public function defaultLoggingDisabled()
+	{
+		return (new Logtivity_Options)->getOption('logtivity_disable_default_logging');
 	}
 
 	public function loadIntegrationDependancies()

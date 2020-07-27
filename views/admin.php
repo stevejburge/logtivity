@@ -14,6 +14,17 @@
 				<td>
 					<span class="description">You can find this value by logging into your account and navigating to/creating this site settings page.</span>
 				</td>
+			</tr>			
+			<tr class="user-user-login-wrap">
+				<th><label for="logtivity_disable_default_logging">Disable built in Event Logging.</label></th>
+				<td>
+					<input type="hidden" name="logtivity_disable_default_logging" id="logtivity_disable_default_logging" value="0">
+
+					<input type="checkbox" name="logtivity_disable_default_logging" id="logtivity_disable_default_logging" value="1" class="regular-checkbox" <?php echo ( absint($options['logtivity_disable_default_logging']) ? 'checked' : ''); ?>>
+				</td>
+				<td>
+					<span class="description">Check this box if you do not want the plugin to log actions automatically and you would prefer to manually log specific actions with code.</span>
+				</td>
 			</tr>
 			<tr class="user-user-login-wrap">
 				<th><label for="logtivity_should_log_profile_link">Store Users Profile Link</label></th>

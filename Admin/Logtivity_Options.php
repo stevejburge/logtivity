@@ -9,6 +9,7 @@ class Logtivity_Options
 	 */
 	protected $settings = [
 		'logtivity_site_api_key',
+		'logtivity_disable_default_logging',
 		'logtivity_should_store_ip',
 		'logtivity_should_post_asynchronously',
 		'logtivity_should_log_latest_response',
