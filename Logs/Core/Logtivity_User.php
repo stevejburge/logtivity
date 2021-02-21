@@ -16,11 +16,9 @@ class Logtivity_User extends Logtivity_Abstract_Logger
 	    return Logtivity_Logger::log('User Logged In', null, $user->ID);
 	}
 
-	public function userLoggedOut()
+	public function userLoggedOut($user_id)
 	{
-		$current_user = wp_get_current_user(); 
-
-		return (new Logtivity_Logger($current_user->ID))
+		return (new Logtivity_Logger($user_id))
 						->async(false)
 						->setAction('User Logged Out')
 						->send();
