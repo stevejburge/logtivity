@@ -28,7 +28,7 @@ Logtivity allows you to store all your sites logs in one place, set up alerts fo
 Yes, the plugin provides a flexible API to log and store custom events with Logtivity. An example of logging a custom event is below.
 
 ```
-Logtivity_Logger::log()
+Logtivity::log()
 	->setAction('My Custom Action')
 	->addMeta('Meta Label', $meta)
 	->addMeta('Another Meta label', $someOtherMeta)

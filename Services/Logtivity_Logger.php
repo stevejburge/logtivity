@@ -67,7 +67,7 @@ class Logtivity_Logger extends Logtivity_Log_API
 	{
 		$Logtivity_logger = new Logtivity_Logger($user_id);
 
-		if(func_num_args() == 0) {
+		if(is_null($action)) {
 
 			return new $Logtivity_logger;
 

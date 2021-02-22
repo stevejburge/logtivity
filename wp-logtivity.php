@@ -9,7 +9,7 @@
  * Author URI:  https://logtivity.io
  */
 
-class Logtivity_Log_Plugin
+class Logtivity
 {
 	/**
 	 * List all classes here with their file paths. Keep class names the same as filenames.
@@ -61,6 +61,11 @@ class Logtivity_Log_Plugin
 		$this->loadDependancies();
 
 		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), [$this, 'addSettingsLinkFromPluginsPage'] );
+	}
+
+	public static function log($action = null, $meta = null, $user_id = null)
+	{
+		return Logtivity_Logger::log($action, $meta, $user_id);
 	}
 
 	public function loadDependancies()
@@ -125,4 +130,4 @@ class Logtivity_Log_Plugin
 	}
 }
 
-$Logtivity_Log_Plugin = new Logtivity_Log_Plugin;
+$logtivity = new Logtivity;

@@ -31,7 +31,7 @@ Logtivity_Logger::log()
 	->setAction('My Custom Action')
 	->addMeta('Meta Label', $meta)
 	->addMeta('Another Meta label', $someOtherMeta)
-	->addUserMeta('Stripe Customer ID', $stripeCustomerId);
+	->addUserMeta('Stripe Customer ID', $stripeCustomerId)
 	->send();
 ```
 
