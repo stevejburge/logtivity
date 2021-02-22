@@ -1,4 +1,4 @@
-=== WP Logtivity ===
+=== Logtivity ===
 
 Contributors: logtivity
 Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity
