@@ -1,4 +1,5 @@
 === WP Logtivity ===
+
 Contributors: logtivity
 Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity
 Requires at least: 4.7
