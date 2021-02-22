@@ -27,6 +27,17 @@
 				</td>
 			</tr>
 			<tr class="user-user-login-wrap">
+				<th><label for="logtivity_should_store_user_id">Store User ID</label></th>
+				<td>
+					<input type="hidden" name="logtivity_should_store_user_id" id="logtivity_should_store_user_id" value="0">
+
+					<input type="checkbox" name="logtivity_should_store_user_id" id="logtivity_should_store_user_id" value="1" class="regular-checkbox" <?php echo ( absint($options['logtivity_should_store_user_id']) ? 'checked' : ''); ?>>
+				</td>
+				<td>
+					<span class="description">If you check this box, when logging an action, we will include the users User ID in the logged action.</span>
+				</td>
+			</tr>
+			<tr class="user-user-login-wrap">
 				<th><label for="logtivity_should_log_profile_link">Store Users Profile Link</label></th>
 				<td>
 					<input type="hidden" name="logtivity_should_log_profile_link" id="logtivity_should_log_profile_link" value="0">

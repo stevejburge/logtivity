@@ -202,11 +202,15 @@ class Logtivity_Logger extends Logtivity_Log_API
 	 */
 	protected function getUserID()
 	{
+		if (!$this->options->shouldStoreUserId()) {
+			return;
+		}
+
 		if ($this->user->isLoggedIn()) {
 			return $this->user->id();
 		}
 
-		return null;
+		return;
 	}
 
 	/**
@@ -217,7 +221,7 @@ class Logtivity_Logger extends Logtivity_Log_API
 	protected function maybeGetUsersIp()
 	{
 		if (!$this->options->shouldStoreIp()) {
-			return false;
+			return;
 		}
 
 		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {

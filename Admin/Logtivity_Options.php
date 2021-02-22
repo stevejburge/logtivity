@@ -10,6 +10,7 @@ class Logtivity_Options
 	protected $settings = [
 		'logtivity_site_api_key',
 		'logtivity_disable_default_logging',
+		'logtivity_should_store_user_id',
 		'logtivity_should_store_ip',
 		'logtivity_should_post_asynchronously',
 		'logtivity_should_log_latest_response',
@@ -47,6 +48,16 @@ class Logtivity_Options
 		}
 
 		return get_option($key);
+	}
+
+	/**
+	 * Should we store the user id?
+	 * 
+	 * @return bool
+	 */
+	public function shouldStoreUserId()
+	{
+		return $this->getOption('logtivity_should_store_user_id');
 	}
 
 	/**

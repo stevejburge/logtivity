@@ -3,11 +3,10 @@
 /**
  * Plugin Name: WP Logtivity
  * Plugin URI:  https://logtivity.io
- * Description: A logging integration with Logtivity.io
- * Version:     0.1
+ * Description: Dedicated Event Monitoring for WordPress using Logtivity.io.
+ * Version:     1.0
  * Author:      Ralph Morris
  * Author URI:  https://logtivity.io
- * License:     GPLv2+
  */
 
 class Logtivity_Log_Plugin
