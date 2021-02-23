@@ -48,7 +48,7 @@ class Logtivity_Admin
 		if (!wp_verify_nonce( $_POST['logtivity_update_settings'], 'logtivity_update_settings' )) 
 		{
 		    wp_safe_redirect( $this->settingsPageUrl() );
-
+			exit;
 			return;
 		}
 
@@ -56,7 +56,7 @@ class Logtivity_Admin
 
 		if (!$user->hasRole('administrator')) {
 		    wp_safe_redirect( $this->settingsPageUrl() );
-
+			exit;
 			return;
 		}
 

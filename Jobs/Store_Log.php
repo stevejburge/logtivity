@@ -1,7 +1,7 @@
 <?php
 
-class Store_Log extends Logtivity_Async_Request {
-
+class Store_Log extends Logtivity_Async_Request 
+{
 	/**
 	 * @var string
 	 */
@@ -39,15 +39,14 @@ class Store_Log extends Logtivity_Async_Request {
 		$Logtivity_Log_API = new Logtivity_Log_API;
 
 		$Logtivity_Log_API->makeRequest($Logtivity_Log_API->getStoreUrl(), [
-			'action' => $_POST['action_name'],
-			'meta' => $_POST['meta'],
-			'user_id' => $_POST['user_id'],
-			'username' => $_POST['username'],
-			'user_meta' => $_POST['user_meta'],
-			'ip_address' => $_POST['ip_address'],
+			'action' => sanitize_text_field($_POST['action_name']),
+			'meta' => ( isset($_POST['meta']) ? (array) $_POST['meta'] : []),
+			'user_id' => ( isset($_POST['user_id']) ? intval($_POST['user_id']) : null ),
+			'username' => ( isset($_POST['username']) ? sanitize_user($_POST['username']) : null),
+			'user_meta' => ( isset($_POST['user_meta']) ? (array) $_POST['user_meta'] : []),
+			'ip_address' => ( isset($_POST['ip_address']) ? sanitize_text_field($_POST['ip_address']) : null),
 		]);
 	}
-
 }
 
 add_action('init', function() {

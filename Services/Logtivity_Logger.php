@@ -248,7 +248,7 @@ class Logtivity_Logger extends Logtivity_Log_API
 	 */
 	public function getUserMeta()
 	{
-		return apply_filters('wp_logtivity_get_user_meta', $this->userMeta);
+		return (array) apply_filters('wp_logtivity_get_user_meta', $this->userMeta);
 	}
 
 	/**
@@ -258,7 +258,7 @@ class Logtivity_Logger extends Logtivity_Log_API
 	 */
 	public function getMeta()
 	{
-		return apply_filters('wp_logtivity_get_meta', $this->meta);
+		return (array) apply_filters('wp_logtivity_get_meta', $this->meta);
 	}
 
 	/**
@@ -269,6 +269,10 @@ class Logtivity_Logger extends Logtivity_Log_API
 	protected function maybeAddProfileLink()
 	{
 		if (!$this->options->shouldStoreProfileLink()) {
+			return;
+		}
+
+		if (!$this->user->isLoggedIn()) {
 			return;
 		}
 

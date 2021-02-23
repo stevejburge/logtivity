@@ -15,8 +15,8 @@ class Logtivity_Theme extends Logtivity_Abstract_Logger
 	{
 		return Logtivity_Logger::log()
 			->setAction("Theme Switched")
-			->addMeta('Old Theme', $old_theme)
-			->addMeta('New Theme', $new_theme)
+			->addMeta('Old Theme', ( is_object($old_theme) ? $old_theme->name : $old_theme))
+			->addMeta('New Theme', ( is_object($new_theme) ? $new_theme->name : $new_theme))
 			->send();
 	}
 
@@ -111,9 +111,9 @@ class Logtivity_Theme extends Logtivity_Abstract_Logger
 
 		$log = Logtivity_Logger::log()->setAction('Theme File Edited');
 
-		if ( ! empty( $_POST['file'] ) ) {
+		if ( ! empty( $_POST['file'] ) && is_string($_POST['file']) ) {
 
-			$log->addMeta('File', $_POST['file']);
+			$log->addMeta('File', sanitize_file_name($_POST['file']));
 
 		}
 
