@@ -47,12 +47,14 @@ class Logtivity_Log_API
 			return;
 		}
 
+		$shouldLogLatestResponse = $this->options->shouldLogLatestResponse();
+
 		$response = wp_remote_post( $url, [
 			'method' => $method,
-			'timeout' => 45,
+			'timeout'   => ( $shouldLogLatestResponse ? 45 : 0.01),
+			'blocking'  => ( $shouldLogLatestResponse ? true : false),
 			'redirection' => 5,
 			'httpversion' => '1.0',
-			'blocking' => true,
 			'headers' => array(),
 			'body' => array_merge(['api_key' => $api_key], $body),
 			'cookies' => array()
@@ -60,7 +62,7 @@ class Logtivity_Log_API
 
 		$response = wp_remote_retrieve_body($response);
 
-		if ($this->options->shouldLogLatestResponse()) {
+		if ($shouldLogLatestResponse) {
 
 			$this->options->update([
 				'logtivity_latest_response' => [

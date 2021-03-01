@@ -112,13 +112,13 @@ class Logtivity_Plugin extends Logtivity_Abstract_Logger
 
 		if ( ! empty( $_REQUEST['file'] ) ) {
 
-			$plugin_dir  = explode( '/', $_REQUEST['file'] );
+			$plugin_dir  = explode( '/', sanitize_text_field($_REQUEST['file'] ));
 			$plugin_data = array_values( get_plugins( '/' . $plugin_dir[0] ) );
 			$plugin_data = array_shift( $plugin_data );
 
 			if ( ! empty( $_POST['file'] ) ) {
 
-				$log->addMeta('File', $_POST['file']);
+				$log->addMeta('File', sanitize_text_field($_POST['file']));
 
 			}
 

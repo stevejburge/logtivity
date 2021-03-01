@@ -162,31 +162,18 @@ class Logtivity_Logger extends Logtivity_Log_API
 			return;
 		}
 
-		if ($this->options->shouldPostAsynchronously() && $this->canAsync) {
-			
-			$store_log = Store_Log::getInstance();
-
-			return $store_log->data($this->getData('action_name'))->dispatch();
-
-		}
-
 		return $this->makeRequest($this->getStoreUrl(), $this->getData());
 	}
 
 	/**	
 	 * Build the data array for storing the log
 	 *
-	 * Allow to override the action array key as 
-	 * if using Asynchronous posting, the 
-	 * $_POST['action'] is reserved.
-	 *
-	 * @param  $action Action array key
 	 * @return array
 	 */
-	protected function getData($action = 'action')
+	protected function getData()
 	{
 		return [
-			$action => $this->action, 
+			'action' => $this->action, 
 			'meta' => $this->getMeta(),
 			'user_id' => $this->getUserID(),
 			'username' => $this->maybeGetUsersUsername(),

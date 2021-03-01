@@ -113,7 +113,7 @@ class Logtivity_Theme extends Logtivity_Abstract_Logger
 
 		if ( ! empty( $_POST['file'] ) && is_string($_POST['file']) ) {
 
-			$log->addMeta('File', sanitize_file_name($_POST['file']));
+			$log->addMeta('File', sanitize_text_field($_POST['file']));
 
 		}
 

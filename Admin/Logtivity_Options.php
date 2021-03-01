@@ -12,11 +12,26 @@ class Logtivity_Options
 		'logtivity_disable_default_logging',
 		'logtivity_should_store_user_id',
 		'logtivity_should_store_ip',
-		'logtivity_should_post_asynchronously',
-		'logtivity_should_log_latest_response',
 		'logtivity_should_log_profile_link',
 		'logtivity_should_log_username',
+		'logtivity_enable_debug_mode',
 		'logtivity_latest_response',
+	];
+
+	/**
+	 * The option keys that we can save to the options table
+	 * 
+	 * @var array
+	 */
+	protected $rules = [
+		'logtivity_site_api_key' => 'is_string',
+		'logtivity_disable_default_logging' => 'is_bool',
+		'logtivity_should_store_user_id' => 'is_bool',
+		'logtivity_should_store_ip' => 'is_bool',
+		'logtivity_should_log_profile_link' => 'is_bool',
+		'logtivity_should_log_username' => 'is_bool',
+		'logtivity_enable_debug_mode' => 'is_bool',
+		'logtivity_latest_response' => 'is_array',
 	];
 
 	/**
@@ -107,23 +122,50 @@ class Logtivity_Options
 	 */
 	public function shouldLogLatestResponse()
 	{
-		return $this->getOption('logtivity_should_log_latest_response');
+		return $this->getOption('logtivity_enable_debug_mode');
 	}
 
 	/**
 	 * Update the options for this plugin
-	 * 
+	 *
 	 * @param  array $data
-	 * @return void[type]       [description]
+	 * @return void
 	 */
-	public function update($data)
+	public function update($data = null)
 	{
-		foreach ($data as $key => $value) 
-		{
-			if (in_array($key, $this->settings)) 
+		if ($data) {
+			foreach ($this->settings as $setting) 
 			{
-				update_option($key, $value);
+				if (array_key_exists($setting, $data) && $this->validateSetting($setting, $data[$setting])) {
+					update_option($setting, $data[$setting]);
+				}
+			}
+			return;
+		}
+
+		foreach ($this->settings as $setting) 
+		{
+			if (isset($_POST[$setting]) && $this->validateSetting($setting, $_POST[$setting])) {
+				update_option($setting, $_POST[$setting]);
 			}
 		}
+	}
+
+	/**	
+	 * Validate that the passed parameters are in the correct format
+	 * 
+	 * @param  string $setting
+	 * @param  string $value
+	 * @return bool  
+	 */
+	protected function validateSetting($setting, $value)
+	{
+		$method = $this->rules[$setting];
+
+		if ($method == 'is_bool') {
+			return $method((bool) $value);
+		}
+
+		return $method($value);
 	}
 }

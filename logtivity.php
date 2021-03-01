@@ -20,8 +20,6 @@ class Logtivity
 		'Helpers/Logtivity_Wp_User',
 		'Admin/Logtivity_Options',
 		'Admin/Logtivity_Admin',
-		'Vendor/Background_Processing/Logtivity_Async_Request',
-		'Jobs/Store_Log',
 		'Services/Logtivity_Log_API',
 		'Services/Logtivity_Logger',
 		'Helpers/Logtivity_Log_Global_Function',

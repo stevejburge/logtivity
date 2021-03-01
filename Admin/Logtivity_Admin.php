@@ -60,7 +60,7 @@ class Logtivity_Admin
 			return;
 		}
 
-		$this->options->update($_POST);
+		$this->options->update();
 		
 	    wp_safe_redirect( $this->settingsPageUrl() );
 	    exit;
