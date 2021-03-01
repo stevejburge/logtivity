@@ -105,16 +105,6 @@ class Logtivity_Options
 		return $this->getOption('logtivity_should_log_username');
 	}
 
-	/**
-	 * Should we be posting to the Log api asynchronously?
-	 * 
-	 * @return bool
-	 */
-	public function shouldPostAsynchronously()
-	{
-		return $this->getOption('logtivity_should_post_asynchronously');
-	}
-
 	/**	
 	 * Should we be logging the response from the API
 	 * 
