@@ -4,7 +4,7 @@ abstract class Logtivity_Abstract_Logger
 {
 	protected $logger;
 
-	protected $ignoredPostTypes = ['revision', 'customize_changeset'];
+	protected $ignoredPostTypes = ['revision', 'customize_changeset', 'nav_menu_item'];
 	
 	protected $ignoredPostTitles = ['Auto Draft'];
 	

@@ -1,4 +1,4 @@
-=== WP Logtivity ===
+=== Logtivity ===
 Contributors: logtivity
 Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity
 Requires at least: 4.7
@@ -20,20 +20,42 @@ Logtivity allows you to store all your sites logs in one place, set up alerts fo
 [Logtivity Terms of Use](https://logtivity.io/terms/).
 [Logtivity Privacy Policy](https://logtivity.io/privacy/).
 
+== Screenshots ==
+
+1. Configurable Site Dashboard
+2. Site Logs with powerful filtering
+3. WordPress Settings Page
+4. Set up unlimited alerts for any activity you want to know about as soon as it happens. Straight to your mailbox or slack channel.
+
+== Installation ==
+#### From your WordPress dashboard
+Visit 'Plugins > Add New'
+Search for 'logtivity’
+Activate Logtivity from your Plugins page.
+
+#### From WordPress.org
+Download logtivity.
+Upload the 'logtivity' directory to your '/wp-content/plugins/' directory, either through the UI (Plugins > Add new) or via SFTP or example.
+Activate Logtivity from your Plugins page.
+
+#### Once Activated
+Visit 'Tools > Logtivity' to view the settings page.
+Enter your Logtivity API key, configure your options and your good to go!
+
 == Frequently Asked Questions ==
 
 = Can I log custom events? =
 
 Yes, the plugin provides a flexible API to log and store custom events with Logtivity. An example of logging a custom event is below.
 
-```
-Logtivity_Logger::log()
+`
+Logtivity::log()
 	->setAction('My Custom Action')
 	->addMeta('Meta Label', $meta)
 	->addMeta('Another Meta label', $someOtherMeta)
 	->addUserMeta('Stripe Customer ID', $stripeCustomerId)
 	->send();
-```
+`
 
 = Can I disable user information being sent with the logs =
 
@@ -45,7 +67,7 @@ Yes! You can easily disable all default logging that this plugin provides so tha
 
 You can also disable buit in logs on an individual basis via the filter example below:
 
-```
+`
 add_action('wp_logtivity_instance', function($Logtivity_Logger) {
 
 	if (strpos($Logtivity_Logger->action, 'Page was updated') !== false) {
@@ -53,7 +75,7 @@ add_action('wp_logtivity_instance', function($Logtivity_Logger) {
 	}
 
 });
-```
+`
 
 == Changelog ==
 

@@ -5,7 +5,7 @@
  * Plugin URI:  https://logtivity.io
  * Description: Dedicated Event Monitoring for WordPress using Logtivity.io.
  * Version:     1.0
- * Author:      Ralph Morris
+ * Author:      Logtivity
  */
 
 class Logtivity

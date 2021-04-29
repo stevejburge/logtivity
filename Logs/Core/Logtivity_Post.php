@@ -8,7 +8,7 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 		add_action( 'wp_trash_post', [$this, 'postWasTrashed'], 10, 1 );
 		add_filter('wp_handle_upload', [$this, 'mediaUploaded'], 10, 2);
 		// add_action( 'delete_attachment', [$this, 'mediaDeleted'], 1, 1 );
-		add_action('delete_post', [$this, 'postPermenantelyDeleted'], 10, 1);
+		add_action('delete_post', [$this, 'postPermanentlyDeleted'], 10, 1);
 		add_filter( 'wp_ajax_save-attachment', [$this, 'mediaMetaUpdated'], -1 );
 	}
 
@@ -86,7 +86,7 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 			->send();
 	}
 
-	public function postPermenantelyDeleted($post_id)
+	public function postPermanentlyDeleted($post_id)
 	{
 		if ($this->ignoringPostType(get_post_type($post_id))) {
 			return;
@@ -98,7 +98,7 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 
 		return Logtivity_Logger::log()
 			->setAction(
-				$this->getPostTypeLabel($post_id) . ' Permenantly Deleted. [' . get_the_title($post_id) . ']'
+				$this->getPostTypeLabel($post_id) . ' Permanently Deleted. [' . get_the_title($post_id) . ']'
 			)
 			->addMeta('Post ID', $post_id)
 			->addMeta('Post Type', get_post_type($post_id))
