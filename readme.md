@@ -3,8 +3,8 @@
 Contributors: logtivity
 Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity
 Requires at least: 4.7
-Tested up to: 5.6.1
-Stable tag: 1.0
+Tested up to: 5.7
+Stable tag: 1.1.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -57,6 +57,11 @@ add_action('wp_logtivity_instance', function($Logtivity_Logger) {
 ```
 
 == Changelog ==
+
+= 1.1.0 =
+* Add logging when updating menus.
+* Add logging when updating widgets.
+* Fix spelling mistake in postPermanentlyDeleted method.
 
 = 1.0 =
 * Fix php warning when tracking a logout event.
