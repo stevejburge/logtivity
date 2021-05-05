@@ -7,7 +7,6 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 		add_action( 'transition_post_status', [$this, 'postStatusChanged'], 10, 3);
 		add_action( 'wp_trash_post', [$this, 'postWasTrashed'], 10, 1 );
 		add_filter('wp_handle_upload', [$this, 'mediaUploaded'], 10, 2);
-		// add_action( 'delete_attachment', [$this, 'mediaDeleted'], 1, 1 );
 		add_action('delete_post', [$this, 'postPermanentlyDeleted'], 10, 1);
 		add_filter( 'wp_ajax_save-attachment', [$this, 'mediaMetaUpdated'], -1 );
 	}
@@ -32,11 +31,12 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 	public function postWasPublished($post)
 	{
 		return Logtivity_Logger::log()
-			->setAction($this->getPostTypeLabel($post->ID) . ' Published. [' . $post->post_title . ']')
+			->setAction($this->getPostTypeLabel($post->ID) . ' Published')
+			->setContext($post->post_title)
 			->addMeta('Post ID', $post->ID)
+			->addMeta('Post Title', $post->post_title)
 			->addMeta('Post Type', $post->post_type)
 			->addMeta('Post Status', $post->post_status)
-			->addMeta('Post Title', $post->post_title)
 			->send();
 	}
 
@@ -51,7 +51,8 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 	public function postWasUpdated($post, $old_status)
 	{
 		return Logtivity_Logger::log()
-			->setAction($this->getPostTypeLabel($post->ID) . ' Updated. [' . $post->post_title . ']')
+			->setAction($this->getPostTypeLabel($post->ID) . ' Updated')
+			->setContext($post->post_title)
 			->addMeta('Post ID', $post->ID)
 			->addMeta('Post Title', $post->post_title)
 			->addMeta('Post Type', $post->post_type)
@@ -67,7 +68,8 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 		}
 		
 		return Logtivity_Logger::log()
-			->setAction($this->getPostTypeLabel($post_id) . ' Trashed. [' . get_the_title($post_id) . ']')
+			->setAction($this->getPostTypeLabel($post_id) . ' Trashed')
+			->setContext(get_the_title($post_id))
 			->addMeta('Post ID', $post_id)
 			->addMeta('Post Type', get_post_type($post_id))
 			->addMeta('Post Title', get_the_title($post_id))
@@ -78,8 +80,9 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 	{
 		return Logtivity_Logger::log()
 			->setAction(
-				$this->getPostTypeLabel($post->ID) . ' Restored from Trash. [' . $post->post_title . ']'
+				$this->getPostTypeLabel($post->ID) . ' Restored from Trash'
 			)
+			->setContext($post->post_title)
 			->addMeta('Post ID', $post->ID)
 			->addMeta('Post Type', $post->post_type)
 			->addMeta('Post Title', $post->post_title)
@@ -98,8 +101,9 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 
 		return Logtivity_Logger::log()
 			->setAction(
-				$this->getPostTypeLabel($post_id) . ' Permanently Deleted. [' . get_the_title($post_id) . ']'
+				$this->getPostTypeLabel($post_id) . ' Permanently Deleted'
 			)
+			->setContext(get_the_title($post_id))
 			->addMeta('Post ID', $post_id)
 			->addMeta('Post Type', get_post_type($post_id))
 			->addMeta('Post Title', get_the_title($post_id))
@@ -110,7 +114,7 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 	{
 		Logtivity_Logger::log()
 			->setAction('Attachment Uploaded')
-			->addMeta('File', $upload['file'])
+			->setContext(basename($upload['file']))
 			->addMeta('Url', $upload['url'])
 			->addMeta('Type', $upload['type'])
 			->addMeta('Context', $context)
@@ -119,25 +123,16 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 		return $upload;
 	}
 
-	// public function mediaDeleted($post_id)
-	// {
-	// 	return Logtivity_Logger::log()
-	// 		->setAction('Attachment was deleted.')
-	// 		->addMeta('Post ID: ' . $post_id)
-	// 		->send();
-	// }
-
 	public function mediaMetaUpdated() 
 	{
 		$post_id = absint($_POST['id']);
 
 		if ($post_id) {
-			
 			Logtivity_Logger::log()
 				->setAction('Attachment Meta Updated.')
 				->addMeta("Media ID", $post_id)
+				->addMeta("Changes", ( isset($_POST['changes']) ? $_POST['changes'] : null))
 				->send();
-
 		}
 
 		return $post;

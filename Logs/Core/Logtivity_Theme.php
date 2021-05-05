@@ -14,9 +14,9 @@ class Logtivity_Theme extends Logtivity_Abstract_Logger
 	public function themeSwitched($new_name, $new_theme, $old_theme)
 	{
 		return Logtivity_Logger::log()
-			->setAction("Theme Switched")
+			->setAction("Theme Activated")
+			->setContext((is_object($new_theme) ? $new_theme->name : $new_theme))
 			->addMeta('Old Theme', ( is_object($old_theme) ? $old_theme->name : $old_theme))
-			->addMeta('New Theme', ( is_object($new_theme) ? $new_theme->name : $new_theme))
 			->send();
 	}
 
@@ -33,28 +33,24 @@ class Logtivity_Theme extends Logtivity_Abstract_Logger
 
 		return Logtivity_Logger::log()
 			->setAction("Theme Deleted")
-			->addMeta('Theme Name', $theme->get( 'Name' ))
-			->addMeta('Version', $theme->get( 'Version' ))
-			->addMeta('URI', $theme->get( 'ThemeURI' ))
+			->setContext($theme->get('Name'))
+			->addMeta('Version', $theme->get('Version'))
+			->addMeta('URI', $theme->get('ThemeURI'))
 			->send();
 	}
 
-	public function upgradeProcessComplete( $upgrader_object, $options ) 
+	public function upgradeProcessComplete($upgrader_object, $options)
 	{
 	    if ( $options['type'] != 'theme' ) {
 	    	return;
 	    }
 
 		if ($options['action'] == 'update') {
-			
 			return $this->themeUpdated($upgrader_object, $options);
-
 		}
 
 		if ($options['action'] == 'install') {
-
 			return $this->themeInstalled($upgrader_object, $options);
-
 		}
 	}
 
@@ -73,7 +69,7 @@ class Logtivity_Theme extends Logtivity_Abstract_Logger
 
 			Logtivity_Logger::log()
 				->setAction('Theme Updated')
-				->addMeta('Name', $theme->name)
+				->setContext($theme->name)
 				->addMeta('Version', $theme->version)
 				->addMeta('Bulk Update', $options['bulk'])
 				->send();
@@ -94,7 +90,7 @@ class Logtivity_Theme extends Logtivity_Abstract_Logger
 
 		return Logtivity_Logger::log()
 					->setAction('Theme Installed')
-					->addMeta('Name', $theme->name)
+					->setContext($theme->name)
 					->addMeta('Version', $theme->version)
 					->send();
 	}
@@ -112,15 +108,11 @@ class Logtivity_Theme extends Logtivity_Abstract_Logger
 		$log = Logtivity_Logger::log()->setAction('Theme File Edited');
 
 		if ( ! empty( $_POST['file'] ) && is_string($_POST['file']) ) {
-
 			$log->addMeta('File', sanitize_text_field($_POST['file']));
-
 		}
 
 		if ( ! empty( $_POST['theme'] ) ) {
-
-			$log->addMeta('Theme', $theme->display( 'Name' ));
-
+			$log->setContext($theme->display( 'Name' ));
 		}
 		
 		$log->send();
@@ -132,7 +124,7 @@ class Logtivity_Theme extends Logtivity_Abstract_Logger
 	{
 		return Logtivity_Logger::log()
 					->setAction('Theme Customizer Updated')
-					->addMeta('Name', $obj->theme()->display( 'Name' ))
+					->setContext($obj->theme()->display('Name'))
 					->send();
 	}
 

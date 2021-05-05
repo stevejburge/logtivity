@@ -23,6 +23,14 @@ class Logtivity_Logger extends Logtivity_Log_API
 	 */
 	public $action;
 
+	/**
+	 * The context for the given log. Could be a post title, or plugin 
+	 * name, or anything to help give this log some more context.
+	 * 
+	 * @var string
+	 */
+	public $context;
+
 	/**	
 	 * Extra info to pass to the log
 	 * 
@@ -83,13 +91,25 @@ class Logtivity_Logger extends Logtivity_Log_API
 	}
 
 	/**
-	 * Set the action string beore sending
+	 * Set the action string before sending
 	 * 
 	 * @param string
 	 */
 	public function setAction($action)
 	{
 		$this->action = $action;
+
+		return $this;
+	}
+
+	/**
+	 * Set the context string before sending.
+	 * 
+	 * @param string
+	 */
+	public function setContext($context)
+	{
+		$this->context = $context;
 
 		return $this;
 	}
@@ -173,7 +193,8 @@ class Logtivity_Logger extends Logtivity_Log_API
 	protected function getData()
 	{
 		return [
-			'action' => $this->action, 
+			'action' => $this->action,
+			'context' => $this->context,
 			'meta' => $this->getMeta(),
 			'user_id' => $this->getUserID(),
 			'username' => $this->maybeGetUsersUsername(),

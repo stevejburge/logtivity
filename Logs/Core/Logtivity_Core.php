@@ -16,15 +16,11 @@ class Logtivity_Core extends Logtivity_Abstract_Logger
 	    }
 
 		if ($options['action'] == 'update') {
-			
 			return $this->coreUpdated($upgrader_object, $options);
-
 		}
 
 		if ($options['action'] == 'install') {
-
 			return $this->coreInstalled($upgrader_object, $options);
-
 		}
 	}
 
@@ -42,7 +38,8 @@ class Logtivity_Core extends Logtivity_Abstract_Logger
 	{
 		if (isset($menuData['menu-name'])) {
 			return Logtivity_Logger::log()
-				->setAction("Menu Updated. [" . $menuData['menu-name'] . "]")
+				->setAction('Menu Updated')
+				->setContext($menuData['menu-name'])
 				->addMeta('Menu ID', $nav_menu_id)
 				->send();
 		}
@@ -51,7 +48,8 @@ class Logtivity_Core extends Logtivity_Abstract_Logger
 	public function widgetUpdated($instance, $new, $old, $obj)
 	{
 		Logtivity_Logger::log()
-			->setAction("Widget Updated. [" . $obj->name . "]")
+			->setAction('Widget Updated')
+			->setContext($obj->name)
 			->addMeta('New Content', $new)
 			->addMeta('Old Content', $old)
 			->send();

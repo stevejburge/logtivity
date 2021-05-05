@@ -28,30 +28,33 @@ class Logtivity_User extends Logtivity_Abstract_Logger
 	{
 		$user = new Logtivity_WP_User($user_id);
 
-		return Logtivity_Logger::log('User Created. [Role: ' . $user->getRole() . ']', [
-			'key' => 'Username',
-			'value' => $user->userLogin()
-		]);
+		return Logtivity_Logger::log()
+			->setAction('User Created')
+			->setContext($user->getRole())
+			->addMeta('Username', $user->userLogin())
+			->send();
 	}
 
 	public function userDeleted($user_id)
 	{
 		$user = new Logtivity_WP_User($user_id);
 
-		return Logtivity_Logger::log('User Deleted. [Role: ' . $user->getRole() . ']', [
-			'key' => 'Username',
-			'value' => $user->userLogin()
-		]);
+		return Logtivity_Logger::log()
+			->setAction('User Deleted')
+			->setContext($user->getRole())
+			->addMeta('Username', $user->userLogin())
+			->send();
 	}
 
 	public function profileUpdated($user_id, $old_user_data)
 	{
 		$user = new Logtivity_WP_User($user_id);
 
-		return Logtivity_Logger::log('Profile Updated. [Role: ' . $user->getRole() . ']', [
-			'key' => 'Username',
-			'value' => $user->userLogin()
-		]);
+		return Logtivity_Logger::log()
+			->setAction('Profile Updated')
+			->setContext($user->getRole())
+			->addMeta('Username', $user->userLogin())
+			->send();
 	}
 }
 

@@ -13,25 +13,27 @@ class Logtivity_Plugin extends Logtivity_Abstract_Logger
 
 	public function pluginActivated($plugin, $network_wide)
 	{
-		return Logtivity_Logger::log('Plugin Activated. [' . $plugin . ']', [
-			'key' => 'network_wide',
-			'value' => $network_wide
-		]);
+		return Logtivity_Logger::log()
+			->setAction('Plugin Activated')
+			->setContext($plugin) 
+			->addMeta('network_wide', $network_wide)
+			->send();
 	}
 
 	public function pluginDeactivated($plugin, $network_deactivating)
 	{
-		return Logtivity_Logger::log('Plugin Deactivated. [' . $plugin . ']', [
-			'key' => 'network_deactivating',
-			'value' => $network_deactivating
-		]);
+		return Logtivity_Logger::log()
+			->setAction('Plugin Deactivated')
+			->setContext($plugin)
+			->addMeta('network_deactivating', $network_deactivating)
+			->send();
 	}
 
 	public function pluginDeleted($plugin_file, $deleted)
 	{
 		return Logtivity_Logger::log()
-					->setAction('Plugin Deleted. [' . $plugin_file . ']')
-					->addMeta('Plugin Name', $plugin_file)
+					->setAction('Plugin Deleted')
+					->setContext($plugin_file)
 					->addMeta('Deletion Successful', $deleted)
 					->send();
 	}
@@ -43,15 +45,11 @@ class Logtivity_Plugin extends Logtivity_Abstract_Logger
 	    }
 
 		if ($options['action'] == 'update') {
-			
 			return $this->pluginUpdated($upgrader_object, $options);
-
 		}
 
 		if ($options['action'] == 'install') {
-
 			return $this->pluginInstalled($upgrader_object, $options);
-
 		}
 	}
 
@@ -72,8 +70,8 @@ class Logtivity_Plugin extends Logtivity_Abstract_Logger
 			$data = get_plugin_data( WP_PLUGIN_DIR . '/' . $slug, true, false );
 			
 			Logtivity_Logger::log()
-				->setAction('Plugin Updated. [' . $data['Name'] . ']')
-				->addMeta('Plugin Name', $data['Name'])
+				->setAction('Plugin Updated')
+				->setContext($data['Name'])
 				->addMeta('Version', ( isset($data['Version']) ? $data['Version'] : 'Not set'))
 				->addMeta('Bulk', $options['bulk'])
 				->send();
@@ -92,8 +90,8 @@ class Logtivity_Plugin extends Logtivity_Abstract_Logger
 		$data = get_plugin_data( $upgrader_object->skin->result['local_destination'] . '/' . $path, true, false );
 		
 		return Logtivity_Logger::log()
-					->setAction('Plugin Installed. [' . $data['Name'] . ']')
-					->addMeta('Plugin Name', $data['Name'])
+					->setAction('Plugin Installed')
+					->setContext($data['Name'])
 					->addMeta('Version', $data['Version'])
 					->send();
 	}
@@ -117,15 +115,11 @@ class Logtivity_Plugin extends Logtivity_Abstract_Logger
 			$plugin_data = array_shift( $plugin_data );
 
 			if ( ! empty( $_POST['file'] ) ) {
-
 				$log->addMeta('File', sanitize_text_field($_POST['file']));
-
 			}
 
 			if ( isset($plugin_data['Name']) ) {
-
-				$log->addMeta('Plugin', $plugin_data['Name']);
-
+				$log->setContext($plugin_data['Name']);
 			}
 
 		}

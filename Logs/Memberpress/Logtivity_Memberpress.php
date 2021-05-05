@@ -27,9 +27,9 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 		$product = $subscription->product();
 
 		return (new Logtivity_Logger($user->ID))
-						->setAction('Memberpress. Free Subscription Created')
-						->addMeta('Membership Product', $product->post_title)
-						->send();
+			->setAction('Free Subscription Created')
+			->setContext($product->post_title)
+			->send();
 	}
 
 	protected function getSubscription($user)
@@ -49,11 +49,11 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 		$paymentMethod = $subscription->payment_method();
 
 		return (new Logtivity_Logger($user->ID))
-						->setAction('Memberpress. Subscription Created')
-						->addMeta('Transaction Total', $subscription->total)
-						->addMeta('Membership Product', $product->post_title)
-						->addMeta('Payment Method', $paymentMethod->name)
-						->send();
+			->setAction('Subscription Created')
+			->setContext($product->post_title)
+			->addMeta('Transaction Total', $subscription->total)
+			->addMeta('Payment Method', $paymentMethod->name)
+			->send();
 	}
 
 	public function subscriptionPaused($event) 
@@ -62,9 +62,9 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 		$product = $subscription->product();
 
 		return Logtivity_Logger::log()
-						->setAction('Memberpress. Subscription Paused')
-						->addMeta('Membership Product', $product->post_title)
-						->send();
+			->setAction('Subscription Paused')
+			->setContext($product->post_title)
+			->send();
 	}
 
 	public function subscriptionResumed($event) 
@@ -73,9 +73,9 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 		$product = $subscription->product();
 	
 		return Logtivity_Logger::log()
-						->setAction('Memberpress. Subscription Resumed')
-						->addMeta('Membership Product', $product->post_title)
-						->send();
+			->setAction('Subscription Resumed')
+			->setContext($product->post_title)
+			->send();
 	}
 
 	public function subscriptionStopped($event) 
@@ -84,9 +84,9 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 		$product = $subscription->product();
 
 		return Logtivity_Logger::log()
-						->setAction('Memberpress. Subscription Stopped')
-						->addMeta('Membership Product', $product->post_title)
-						->send();
+			->setAction('Subscription Stopped')
+			->setContext($product->post_title)
+			->send();
 	}
 }
 
