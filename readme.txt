@@ -79,6 +79,9 @@ add_action('wp_logtivity_instance', function($Logtivity_Logger) {
 
 == Changelog ==
 
+= 1.2.0 =
+* Added context parameter to API calls to separate out Actions from Titles.
+
 = 1.1.0 =
 * Add logging when updating menus.
 * Add logging when updating widgets.
