@@ -2,9 +2,14 @@
 
 class Logtivity_Post extends Logtivity_Abstract_Logger
 {
+	protected $disableUpdateLog = false;
+	
+	protected $action;
+
 	public function registerHooks()
 	{
 		add_action( 'transition_post_status', [$this, 'postStatusChanged'], 10, 3);
+		add_action( 'save_post', array( $this, 'postWasUpdated' ), 10, 3 );
 		add_action( 'wp_trash_post', [$this, 'postWasTrashed'], 10, 1 );
 		add_filter('wp_handle_upload', [$this, 'mediaUploaded'], 10, 2);
 		add_action('delete_post', [$this, 'postPermanentlyDeleted'], 10, 1);
@@ -18,26 +23,17 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 		}
 
 		if ($old_status == 'trash') {
+			$this->disableUpdateLog = true;
 			return $this->postWasRestored($post);
 		}
 
 		if ($old_status != 'publish' && $new_status == 'publish') {
-			return $this->postWasPublished($post);
+			$this->action = $this->getPostTypeLabel($post->ID) . ' Published';
 		}
 
-		return $this->postWasUpdated($post, $old_status);
-	}
-
-	public function postWasPublished($post)
-	{
-		return Logtivity_Logger::log()
-			->setAction($this->getPostTypeLabel($post->ID) . ' Published')
-			->setContext($post->post_title)
-			->addMeta('Post ID', $post->ID)
-			->addMeta('Post Title', $post->post_title)
-			->addMeta('Post Type', $post->post_type)
-			->addMeta('Post Status', $post->post_status)
-			->send();
+		if ($old_status == 'publish' && $new_status == 'draft') {
+			$this->action = $this->getPostTypeLabel($post->ID) . ' Unpublished';
+		}
 	}
 
 	/**
@@ -48,17 +44,43 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 	 * @param  bool $update
 	 * @return void
 	 */
-	public function postWasUpdated($post, $old_status)
+	public function postWasUpdated($post_id, $post, $update)
 	{
-		return Logtivity_Logger::log()
-			->setAction($this->getPostTypeLabel($post->ID) . ' Updated')
+		if ($this->disableUpdateLog) {
+			return;
+		}
+
+		if ($this->shouldIgnore($post)) {
+			return;
+		}
+
+		$log = Logtivity_Logger::log()
+			->setAction($this->action ?? $this->getPostTypeLabel($post->ID) . ' Updated')
 			->setContext($post->post_title)
 			->addMeta('Post ID', $post->ID)
 			->addMeta('Post Title', $post->post_title)
 			->addMeta('Post Type', $post->post_type)
-			->addMeta('Post Status', $post->post_status)
-			->addMeta('Old Status', $old_status)
-			->send();
+			->addMeta('Post Status', $post->post_status);
+
+		if ($revision = $this->getRevision($post_id)) {
+			$log->addMeta('View Revision', $revision);
+		}
+
+		$log->send();
+	}
+
+	private function getRevision( $post_id ) 
+	{
+		$revisions = wp_get_post_revisions( $post_id );
+		if ( ! empty( $revisions ) ) {
+			$revision = array_shift( $revisions );
+			return $this->getRevisionLink( $revision->ID );
+		}
+	}
+
+	private function getRevisionLink( $revision_id ) 
+	{
+		return ! empty( $revision_id ) ? add_query_arg( 'revision', $revision_id, admin_url( 'revision.php' ) ) : null;
 	}
 
 	public function postWasTrashed($post_id)
