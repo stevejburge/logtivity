@@ -4,7 +4,7 @@ Contributors: logtivity
 Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity
 Requires at least: 4.7
 Tested up to: 5.7
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -57,6 +57,11 @@ add_action('wp_logtivity_instance', function($Logtivity_Logger) {
 ```
 
 == Changelog ==
+
+= 1.3.1 =
+* Fix user info not always being picked up on User login action.
+* Fix 0 being logged for username when not logged in.
+* Fixed duplicate logs being recorded when Updating a post in Gutenberg.
 
 = 1.3.0 =
 * Added revision link to Post Updated logs.
