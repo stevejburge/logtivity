@@ -13,11 +13,11 @@ class Logtivity_User extends Logtivity_Abstract_Logger
 
 	public function userLoggedIn( $user_login, $user ) 
 	{
-		$user = new Logtivity_WP_User($user->ID);
+		$logtivityUser = new Logtivity_WP_User($user->ID);
 
-		return Logtivity_Logger::log()
+		return (new Logtivity_Logger($user))
 	    	->setAction('User Logged In')
-	    	->setContext($user->getRole())
+	    	->setContext($logtivityUser->getRole())
 	    	->send();
 	}
 

@@ -21,7 +21,7 @@ abstract class Logtivity_Abstract_Logger
 	 * @param  WP_Post $post
 	 * @return bool
 	 */
-	protected function shouldIgnore($post)
+	protected function shouldIgnore($post, $action = null)
 	{
 		if ($this->ignoringPostType($post->post_type)) {
 			return true;
@@ -35,7 +35,41 @@ abstract class Logtivity_Abstract_Logger
 			return true;
 		}
 
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return true;
+		}
+
 		return false;
+	}
+
+	/**
+	 * Check to see if the request is Gutenbergs second request
+	 * 
+	 * @return bool
+	 */
+	protected function loggedRecently($postId)
+	{
+		$date = get_post_meta($postId, 'logtivity_last_logged', true);
+
+		if (!$date) {
+			return false;
+		}
+
+		$now = new DateTime();
+		$lastLogged = $this->sanitizeDate($date);
+
+		$diffInSeconds = $now->getTimestamp() - $lastLogged->getTimestamp();
+
+		return $diffInSeconds < 5;
+	}
+
+	protected function sanitizeDate( $date ) 
+	{
+		try {
+			return new \DateTime( $date );
+		} catch ( \Exception $e ) {
+			return new \DateTime( '1970-01-01' );
+		}
 	}
 
 	/**

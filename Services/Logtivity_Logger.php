@@ -214,11 +214,11 @@ class Logtivity_Logger extends Logtivity_Log_API
 			return;
 		}
 
-		if ($this->user->isLoggedIn()) {
-			return $this->user->id();
+		if (!$this->user->isLoggedIn()) {
+			return;
 		}
 
-		return;
+		return $this->user->id();
 	}
 
 	/**
@@ -302,6 +302,10 @@ class Logtivity_Logger extends Logtivity_Log_API
 	{
 		if (!$this->options->shouldStoreUsername()) {
 			return null;
+		}
+
+		if (!$this->user->isLoggedIn()) {
+			return;
 		}
 
 		return $this->user->userLogin();

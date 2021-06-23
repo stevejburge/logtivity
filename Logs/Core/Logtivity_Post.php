@@ -54,6 +54,10 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 			return;
 		}
 
+		if ($this->loggedRecently($post->ID)) {
+			return true;
+		}
+
 		$log = Logtivity_Logger::log()
 			->setAction($this->action ?? $this->getPostTypeLabel($post->ID) . ' Updated')
 			->setContext($post->post_title)
@@ -67,6 +71,8 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 		}
 
 		$log->send();
+
+		update_post_meta($post_id, 'logtivity_last_logged', (new \DateTime())->format('Y-m-d H:i:s'));
 	}
 
 	private function getRevision( $post_id ) 
