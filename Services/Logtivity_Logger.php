@@ -46,14 +46,6 @@ class Logtivity_Logger extends Logtivity_Log_API
 	public $userMeta = [];
 
 	/**	
-	 * Allow the overriding of async posting on a per log basis. Gives us the ability 
-	 * to turn it off for certain logs that don't support async. eg. logout
-	 * 
-	 * @var boolean
-	 */
-	public $canAsync = true;
-
-	/**	
 	 * Set the user and call the parent constructor
 	 */
 	public function __construct($user_id = null)
@@ -142,15 +134,14 @@ class Logtivity_Logger extends Logtivity_Log_API
 		return $this;
 	}
 
-	/**
-	 * Set whether this log is going to be posted asynchronously or not
+	/**	
+	 * Should we wait and record the response from logtivity.
 	 * 
-	 * @param  boolean $value
 	 * @return $this
 	 */
-	public function async($value = true)
+	public function waitForResponse()
 	{
-		$this->canAsync = $value;
+		$this->waitForResponse = true;
 
 		return $this;
 	}
@@ -182,7 +173,7 @@ class Logtivity_Logger extends Logtivity_Log_API
 			return;
 		}
 
-		return $this->makeRequest($this->getStoreUrl(), $this->getData());
+		return $this->makeRequest($this->getEndpoint('/logs/store'), $this->getData());
 	}
 
 	/**	

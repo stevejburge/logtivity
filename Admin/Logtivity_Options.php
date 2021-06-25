@@ -16,6 +16,7 @@ class Logtivity_Options
 		'logtivity_should_log_username',
 		'logtivity_enable_debug_mode',
 		'logtivity_latest_response',
+		'logtivity_api_key_check',
 	];
 
 	/**
@@ -138,6 +139,28 @@ class Logtivity_Options
 			if (isset($_POST[$setting]) && $this->validateSetting($setting, $_POST[$setting])) {
 				update_option($setting, $_POST[$setting]);
 			}
+		}
+
+		$this->checkApiKey($_POST['logtivity_site_api_key'] ?? false);
+	}
+
+	public function checkApiKey($apiKey)
+	{
+		if (!$apiKey) {
+			update_option('logtivity_api_key_check', 'fail');
+			return;
+		}
+
+		$response = Logtivity::log()
+			->setAction('Settings Updated')
+			->setContext('Logtivity')
+			->waitForResponse()
+			->send();
+
+		if (strpos($response, 'Log Received') !== false) {
+			update_option('logtivity_api_key_check', 'success');
+		} else {
+			update_option('logtivity_api_key_check', 'fail');
 		}
 	}
 

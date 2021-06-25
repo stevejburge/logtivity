@@ -2,7 +2,7 @@
 
 class Logtivity_Log_API
 {
-	public $logtivityStoreLogEndpoint = 'https://api.logtivity.io/logs/store';
+	public $logtivityApiUrl = 'https://api.logtivity.io';
 	
 	/**
 	 * Option class to access the plugin settings
@@ -11,23 +11,30 @@ class Logtivity_Log_API
 	 */
 	protected $options;
 
+	/**
+	 * Should we wait to return the response from the API?
+	 * 
+	 * @var boolean
+	 */
+	public $waitForResponse = false;
+
 	public function __construct()
 	{
 		$this->options = new Logtivity_Options;
 	}
 
 	/**
-	 * Get the endpoint we post to with the log data to store
+	 * Get the API URL for the Logtivity endpoint
 	 * 
 	 * @return string
 	 */
-	public function getStoreUrl()
+	public function getEndpoint($endpoint)
 	{
-		if (defined('Logtivity_Store_Endpoint')) {
-		    return Logtivity_Store_Endpoint;
+		if (defined('Logtivity_API_URL')) {
+		    return Logtivity_API_URL . $endpoint;
 		}
 		
-		return $this->logtivityStoreLogEndpoint;
+		return $this->logtivityApiUrl . $endpoint;
 	}
 
 	/**	
@@ -47,7 +54,7 @@ class Logtivity_Log_API
 			return;
 		}
 
-		$shouldLogLatestResponse = $this->options->shouldLogLatestResponse();
+		$shouldLogLatestResponse = $this->waitForResponse || $this->options->shouldLogLatestResponse();
 
 		$response = wp_remote_post( $url, [
 			'method' => $method,

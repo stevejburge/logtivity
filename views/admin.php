@@ -10,6 +10,9 @@
 				<th><label for="logtivity_site_api_key">Site API Key</label></th>
 				<td>
 					<input type="text" name="logtivity_site_api_key" id="logtivity_site_api_key" value="<?php echo sanitize_text_field($options['logtivity_site_api_key']); ?>" class="regular-text">
+					<?php if ($options['logtivity_api_key_check']): ?>
+						<p>Status: <?php echo ( sanitize_text_field($options['logtivity_api_key_check']) == 'success' ? '<span style="color: #4caf50; font-weight: bold;">Connected</span>' : '<span style="color: #ff3232; font-weight: bold;">Not connected. Please check API key.</span>'); ?></p>
+					<?php endif ?>
 				</td>
 				<td>
 					<span class="description">You can find this value by logging into your account and navigating to/creating this site settings page.</span>

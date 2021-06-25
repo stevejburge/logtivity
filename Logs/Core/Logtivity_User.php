@@ -26,7 +26,6 @@ class Logtivity_User extends Logtivity_Abstract_Logger
 		$user = new Logtivity_WP_User($user_id);
 
 		return (new Logtivity_Logger($user_id))
-						->async(false)
 						->setAction('User Logged Out')
 						->setContext($user->getRole())
 						->send();
