@@ -4,7 +4,7 @@
  * Plugin Name: Logtivity
  * Plugin URI:  https://logtivity.io
  * Description: Dedicated Event Monitoring for WordPress using Logtivity.io.
- * Version:     1.3.1
+ * Version:     1.4.0
  * Author:      Logtivity
  */
 
