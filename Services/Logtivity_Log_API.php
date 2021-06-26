@@ -30,8 +30,8 @@ class Logtivity_Log_API
 	 */
 	public function getEndpoint($endpoint)
 	{
-		if (defined('Logtivity_API_URL')) {
-		    return Logtivity_API_URL . $endpoint;
+		if (defined('LOGTIVITY_API_URL')) {
+		    return LOGTIVITY_API_URL . $endpoint;
 		}
 		
 		return $this->logtivityApiUrl . $endpoint;

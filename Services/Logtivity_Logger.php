@@ -257,6 +257,23 @@ class Logtivity_Logger extends Logtivity_Log_API
 	 */
 	public function getMeta()
 	{
+		try {
+			$this->addMeta(
+				'URL', 
+				sanitize_text_field(
+					(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"
+				)
+			);
+
+			if (isset($_SERVER['REQUEST_METHOD'])) {
+				$this->addMeta(
+					'Request', 
+					sanitize_text_field($_SERVER['REQUEST_METHOD'])
+				);
+			}
+		} catch (\Exception $e) {
+		}
+
 		return (array) apply_filters('wp_logtivity_get_meta', $this->meta);
 	}
 
