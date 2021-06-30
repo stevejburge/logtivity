@@ -3,7 +3,7 @@ Contributors: logtivity
 Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity
 Requires at least: 4.7
 Tested up to: 5.7
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -78,6 +78,11 @@ add_action('wp_logtivity_instance', function($Logtivity_Logger) {
 `
 
 == Changelog ==
+
+= 1.5.0 =
+* Renamed Download Monitor Action name to File Downloaded.
+* Added Request URL as log meta.
+* Added Request Type as log meta.
 
 = 1.4.0 =
 * Removed deprecated async method from Logtivity_Logger class.
