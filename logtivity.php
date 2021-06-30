@@ -50,6 +50,9 @@ class Logtivity
 		],
 		'MeprCtrlFactory' => [
 			'Logs/Memberpress/Logtivity_Memberpress',
+		],
+		'Easy_Digital_Downloads' => [
+			'Logs/Easy_Digital_Downloads/Logtivity_Easy_Digital_Downloads'
 		]
 	];
 

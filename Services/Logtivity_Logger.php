@@ -50,7 +50,7 @@ class Logtivity_Logger extends Logtivity_Log_API
 	 */
 	public function __construct($user_id = null)
 	{
-		$this->user = new Logtivity_Wp_User($user_id);
+		$this->setUser($user_id);
 
 		parent::__construct();
 	}
@@ -80,6 +80,18 @@ class Logtivity_Logger extends Logtivity_Log_API
 		}
 
 		return $Logtivity_logger->send();
+	}
+
+	/**
+	 * Set the user for the current log instance
+	 * 
+	 * @param integer $user_id
+	 */
+	public function setUser($user_id)
+	{
+		$this->user = new Logtivity_Wp_User($user_id);
+
+		return $this;
 	}
 
 	/**

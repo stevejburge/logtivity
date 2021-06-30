@@ -33,10 +33,15 @@ class Logtivity_User extends Logtivity_Abstract_Logger
 
 	public function userCreated($user_id)
 	{
+		$log =  Logtivity_Logger::log();
+
+		if (!is_user_logged_in()) {
+			$log->setUser($user_id);
+		}
+
 		$user = new Logtivity_WP_User($user_id);
 
-		return Logtivity_Logger::log()
-			->setAction('User Created')
+		$log->setAction('User Created')
 			->setContext($user->getRole())
 			->addMeta('Username', $user->userLogin())
 			->send();
