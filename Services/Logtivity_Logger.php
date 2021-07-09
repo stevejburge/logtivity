@@ -127,7 +127,10 @@ class Logtivity_Logger extends Logtivity_Log_API
 	 */
 	public function addMeta($key, $value)
 	{
-		$this->meta[$key] = $value;
+		$this->meta[] = [
+			'key' => $key,
+			'value' => $value,
+		];
 
 		return $this;
 	}
