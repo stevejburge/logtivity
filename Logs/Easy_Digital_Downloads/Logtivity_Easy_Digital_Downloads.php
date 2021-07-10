@@ -6,9 +6,8 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 	{
 		add_action('edd_post_add_to_cart',  [$this, 'itemAddedToCart'], 10, 3);
 		add_action('edd_post_remove_from_cart',  [$this, 'itemRemovedFromCart'], 10, 3);
-		add_action('edd_complete_purchase', [$this, 'purchasedCompleted'], 10, 3);
+		add_action('edd_customer_post_create', [$this, 'customerCreated'], 10, 2);
 		add_action('edd_update_payment_status', [$this, 'paymentStatusUpdated'], 10, 3);
-		add_action('edd_post_refund_payment', [$this, 'paymentRefunded'], 10, 1);
 	}
 
 	public function itemAddedToCart($download_id, $options, $items)
@@ -49,44 +48,45 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 		$log->send();
 	}
 
-	public function purchasedCompleted($payment_id, $payment, $customer)
+	public function paymentStatusUpdated($payment_id, $status, $old_status)
 	{
+		$payment = new EDD_Payment($payment_id);
+
+		if ($status == 'refunded') {
+			return $this->paymentRefunded($payment);
+		}
+
+		if ($status == 'publish') {
+			return $this->paymentCompleted($payment);
+		}
+
+		Logtivity_Logger::log()
+			->setAction('Payment ' . ucfirst($status))
+			->setContext($this->getPaymentKey($payment))
+			->addMeta('Payment Key', $this->getPaymentKey($payment))
+			->send();
+	}
+
+	public function paymentCompleted($payment)
+	{
+		$key = $this->getPaymentKey($payment);
+
 		$log = Logtivity_Logger::log()
-			->setAction('Purchase Complete')
-			->setContext($this->getPaymentKey($payment));
+			->setAction('Payment Completed')
+			->setContext($key)
+			->addMeta('Payment Key', $key);
 
 		foreach ($payment->cart_details as $item) {
 			$log->addMeta('Cart Item', $item['name']);
 		}
 
-		$log->addMeta('Total', $payment->total);
-		$log->addMeta('Currency', $payment->currency);
-		$log->addMeta('Gateway', $payment->gateway);
+		$customer = new EDD_Customer($payment->get_meta( '_edd_payment_customer_id', true ));
 
-		$log->addMeta('Customer ID', $customer->id);
-		$log->addMeta('Customer Email', $customer->email);
-
-		$log->send();
-	}
-
-	public function paymentStatusUpdated($payment_id, $status, $old_status)
-	{
-		if ($status == 'failed') {
-			return $this->paymentFailed($payment_id);
-		}
-
-		if ($status == 'refunded') {
-			return;
-		}
-	}
-
-	public function paymentFailed($payment_id)
-	{
-		$payment = new EDD_Payment($payment_id);
-
-		Logtivity_Logger::log()
-			->setAction('Payment Failed')
-			->setContext($this->getPaymentKey($payment))
+		$log->addMeta('Total', $payment->total)
+			->addMeta('Currency', $payment->currency)
+			->addMeta('Gateway', $payment->gateway)
+			->addMeta('Customer ID', $customer->id)
+			->addMeta('Customer Email', $customer->email)
 			->send();
 	}
 
@@ -96,6 +96,7 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 			->setAction('Payment Refunded')
 			->setContext($this->getPaymentKey($EDD_Payment))
 			->addMeta('Amount', $EDD_Payment->get_meta('_edd_payment_total'))
+			->addMeta('Payment Key', $this->getPaymentKey($EDD_Payment))
 			->send();
 	}
 
@@ -106,6 +107,19 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 		if (isset($meta['key'])) {
 			return $meta['key'];
 		}
+	}
+
+	public function customerCreated($created, $args)
+	{
+		if (!$created) {
+			return;
+		}
+
+		Logtivity_Logger::log()
+			->setAction('Customer Created')
+			->setContext($args['name'])
+			->addMeta('Customer ID', $created)
+			->send();
 	}
 }
 
