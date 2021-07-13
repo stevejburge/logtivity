@@ -9,6 +9,8 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 		add_action('edd_customer_post_create', [$this, 'customerCreated'], 10, 2);
 		add_action('edd_update_payment_status', [$this, 'paymentStatusUpdated'], 10, 3);
 		add_action('edd_process_verified_download', [$this, 'fileDownloaded'], 10, 4);
+		add_action( 'edd_cart_discount_set', [$this, 'discountApplied'], 10, 2);
+		add_action( 'edd_cart_discount_removed', [$this, 'discountRemoved'], 10, 2);
 	}
 
 	public function itemAddedToCart($download_id, $options, $items)
@@ -83,6 +85,10 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 
 		$customer = new EDD_Customer($payment->get_meta( '_edd_payment_customer_id', true ));
 
+		if ($payment->discounts != 'none') {
+			$log->addMeta('Discount Code', $payment->discounts);
+		}
+
 		$log->addMeta('Total', $payment->total)
 			->addMeta('Currency', $payment->currency)
 			->addMeta('Gateway', $payment->gateway)
@@ -146,6 +152,22 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 		}
 
 		$log->addMeta('Customer ID', $customer->id)
+			->send();
+	}
+
+	public function discountApplied($code, $discounts)
+	{
+		Logtivity_Logger::log()
+			->setAction('Discount Applied')
+			->setContext($code)
+			->send();
+	}
+
+	public function discountRemoved($code, $discounts)
+	{
+		Logtivity_Logger::log()
+			->setAction('Discount Removed')
+			->setContext($code)
 			->send();
 	}
 }
