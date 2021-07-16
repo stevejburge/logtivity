@@ -113,8 +113,11 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 		(new Logtivity_Logger($user_id))
 			->setAction('Transaction Created')
 			->setContext($args['status'])
-			->addMeta('Transaction ID', $rowId)
 			->addMeta('Total', $args['total'])
+			->addMeta('Transaction ID', $rowId)
+			->addMeta('Transaction Type', $args['txn_type'])
+			->addMeta('Subscription ID', $args['subscription_id'])
+			->addMeta('Product ID', $args['product_id'])
 			->send();
 
 		return $rowId;
@@ -143,7 +146,7 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 	{
 		(new Logtivity_Logger())
 			->setAction(strip_tags($MeprBaseEmail->title) . ' Sent')
-			->setContext($values['username'])
+			->setContext($MeprBaseEmail->to)
 			->send();
 	}
 
