@@ -34,6 +34,7 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 		return (new Logtivity_Logger($user->ID))
 			->setAction('Free Subscription Created')
 			->setContext($product->post_title)
+			->addMeta('Subscription ID', $subscription->id)
 			->send();
 	}
 
@@ -58,6 +59,7 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 			->setContext($product->post_title)
 			->addMeta('Transaction Total', $subscription->total)
 			->addMeta('Payment Method', $paymentMethod->name)
+			->addMeta('Subscription ID', $subscription->id)
 			->send();
 	}
 
@@ -69,6 +71,7 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 		return Logtivity_Logger::log()
 			->setAction('Subscription Paused')
 			->setContext($product->post_title)
+			->addMeta('Subscription ID', $subscription->id)
 			->send();
 	}
 
@@ -80,6 +83,7 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 		return Logtivity_Logger::log()
 			->setAction('Subscription Resumed')
 			->setContext($product->post_title)
+			->addMeta('Subscription ID', $subscription->id)
 			->send();
 	}
 
@@ -91,6 +95,7 @@ class Logtivity_Memberpress extends Logtivity_Abstract_Logger
 		return Logtivity_Logger::log()
 			->setAction('Subscription Stopped')
 			->setContext($product->post_title)
+			->addMeta('Subscription ID', $subscription->id)
 			->send();
 	}
 
