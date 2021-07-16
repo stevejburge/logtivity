@@ -105,15 +105,17 @@ class Logtivity
 
 	public function loadIntegrationDependancies()
 	{
-		foreach ($this->integrationDependancies as $key => $value) 
-		{
-			if (class_exists($key)) {
-				foreach ($value as $filePath) 
-				{
-					$this->loadFile($filePath);
+		add_action('plugins_loaded', function() {
+			foreach ($this->integrationDependancies as $key => $value) 
+			{
+				if (class_exists($key)) {
+					foreach ($value as $filePath) 
+					{
+						$this->loadFile($filePath);
+					}
 				}
 			}
-		}
+		});
 	}
 
 	public function loadFile($filePath)
