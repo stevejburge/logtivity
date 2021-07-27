@@ -4,7 +4,7 @@ Contributors: logtivity
 Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity
 Requires at least: 4.7
 Tested up to: 5.7
-Stable tag: 1.5.0
+Stable tag: 1.6.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -57,6 +57,16 @@ add_action('wp_logtivity_instance', function($Logtivity_Logger) {
 ```
 
 == Changelog ==
+
+= 1.6.0 =
+* Added initial Easy Digital Downloads core integration.
+* Track when Core Settings are updated.
+* Track when Permalinks are updated.
+* Track when Memberpress Transactions are Created/Updated.
+* Track when Memberpress Emails are sent.
+* Track when a Memberpress User Profile is updated.
+* Track when Memberpress Settings are Updated.
+* Track WordPress comments CRUD.
 
 = 1.5.0 =
 * Renamed Download Monitor Action name to File Downloaded.
