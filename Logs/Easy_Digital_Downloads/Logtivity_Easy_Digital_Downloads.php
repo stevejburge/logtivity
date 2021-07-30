@@ -22,7 +22,7 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 		$prices = edd_get_variable_prices($download_id);
 
 		foreach ($items as $item) {
-			if (isset($prices[$item['options']['price_id']])) {
+			if (isset($item['options']['price_id']) && isset($prices[$item['options']['price_id']])) {
 				$log->addMeta('Variable Item', $prices[$item['options']['price_id']]['name']);
 			}
 

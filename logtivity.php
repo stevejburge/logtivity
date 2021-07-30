@@ -54,7 +54,10 @@ class Logtivity
 		],
 		'Easy_Digital_Downloads' => [
 			'Logs/Easy_Digital_Downloads/Logtivity_Easy_Digital_Downloads'
-		]
+		],
+		'EDD_Software_Licensing' => [
+			'Logs/Easy_Digital_Downloads/Logtivity_Easy_Digial_Downloads_Software_Licensing'
+		],
 	];
 
 	public function __construct()

@@ -10,6 +10,7 @@ abstract class Logtivity_Abstract_Logger
 		'nav_menu_item', 
 		'edd_log', 
 		'edd_payment',
+		'edd_license_log',
 	];
 	
 	protected $ignoredPostTitles = [
