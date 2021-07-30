@@ -11,6 +11,10 @@ class Logtivity_Comment
 
 	public function commentCreated($comment_ID, $comment_approved, $commentdata)
 	{
+		if ($comment_approved === 'spam') {
+			return;
+		}
+		
 		return Logtivity_Logger::log()
 			->setAction('Comment Created')
 			->setContext(substr(strip_tags($commentdata['comment_content']), 0, 30).'...') 
