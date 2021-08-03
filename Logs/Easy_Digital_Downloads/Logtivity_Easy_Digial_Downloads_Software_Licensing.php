@@ -37,12 +37,12 @@ class Logtivity_Easy_Digial_Downloads_Software_Licensing
 			$log->setUser($license->user_id ?? null);
 		}
 
+		if (isset($args['url'])) {
+			$log->addMeta('Site', $args['url']);
+		}
+		
 		if ($result['success']) {
 			$log->setAction('License Activated');
-
-			if (isset($args['url'])) {
-				$log->addMeta('Site', $args['url']);
-			}
 
 			if (isset($result['site_count'])) {
 				$log->addMeta('Activation Count', $result['site_count']);
@@ -52,8 +52,11 @@ class Logtivity_Easy_Digial_Downloads_Software_Licensing
 				$log->addMeta('Activation Limit', $result['license_limit']);
 			}
 
-			if (isset($result['expires'])) {
-				$log->addMeta('Expiration Date', $result['expires']);
+			if (isset($result['expires']) && $result['expires']) {
+				try {
+					$log->addMeta('Expiration Date', date('M d Y', $result['expires']));
+				} catch (\Exception $e) {
+				}
 			}
 
 			$log->send();
@@ -62,8 +65,9 @@ class Logtivity_Easy_Digial_Downloads_Software_Licensing
 		}
 	
 		$log->setAction('License Activation Failed')
-			->addMeta('Reason', $result['error'] ?? '' )
-			->send();
+			->addMeta('Reason', $result['error'] ?? '');
+		
+		$log->send();
 
 		return $result;
 	}
