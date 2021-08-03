@@ -1,6 +1,6 @@
 <?php
 
-class Logtivity_Easy_Digial_Downloads_Software_Licensing
+class Logtivity_Easy_Digital_Downloads_Software_Licensing
 {
 	protected $deactivatingLicenseArgs;
 
@@ -23,6 +23,7 @@ class Logtivity_Easy_Digial_Downloads_Software_Licensing
 			->setUser($license->user_id ?? null)
 			->addMeta('Payment ID', $payment_id)
 			->addMeta('Type', $type)
+			->addMeta('Customer ID', $license->customer_id)
 			->send();
 	}
 
@@ -35,6 +36,12 @@ class Logtivity_Easy_Digial_Downloads_Software_Licensing
 
 		if ( false !== $license ) {
 			$log->setUser($license->user_id ?? null);
+			try {
+				if ($license->customer_id) {
+					$log->addMeta('Customer ID', $license->customer_id);
+				}
+			} catch (\Exception $e) {
+			}
 		}
 
 		if (isset($args['url'])) {
@@ -93,13 +100,21 @@ class Logtivity_Easy_Digial_Downloads_Software_Licensing
 			}
 		}
 
-		Logtivity_Logger::log()
+		$log = Logtivity_Logger::log()
 			->setAction('License Deactivated')
 			->setContext($this->deactivatingLicenseArgs['key'])
-			->setUser($license->user_id ?? null)
-			->addMeta('Site', $this->deactivatingLicenseArgs['url'] ?? $domain ?? null)
+			->setUser($license->user_id ?? null);
+
+			try {
+				if ($license->customer_id) {
+					$log->addMeta('Customer ID', $license->customer_id);
+				}
+			} catch (\Exception $e) {
+			}
+
+		$log->addMeta('Site', $this->deactivatingLicenseArgs['url'] ?? $domain ?? null)
 			->send();
 	}
 }
 
-$Logtivity_Easy_Digial_Downloads_Software_Licensing = new Logtivity_Easy_Digial_Downloads_Software_Licensing;
+$Logtivity_Easy_Digital_Downloads_Software_Licensing = new Logtivity_Easy_Digital_Downloads_Software_Licensing;

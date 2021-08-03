@@ -4,7 +4,7 @@ Contributors: logtivity
 Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity
 Requires at least: 4.7
 Tested up to: 5.7
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -57,6 +57,15 @@ add_action('wp_logtivity_instance', function($Logtivity_Logger) {
 ```
 
 == Changelog ==
+
+= 1.6.1 =
+
+* Begin adding support for the Easy Digital Downloads Software Licensing Addon.
+* Log License Created events.
+* Log License Activated events.
+* Log License Activation Failed events.
+* Log License Deactivated events.
+* Don't log new comments when they are marked as spam.
 
 = 1.6.0 =
 * Added initial Easy Digital Downloads core integration.
