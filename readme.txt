@@ -1,4 +1,5 @@
-=== Logtivity: WordPress Activity Log With Charts and Notificatioons ===
+=== Logtivity: WordPress Activity Log With Charts and Notifications ===
+
 Contributors: logtivity
 Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity, easy digital downloads, edd
 Requires at least: 4.7
@@ -12,21 +13,21 @@ Logtivity logs the user activity on your site. You can use activity data for cha
 
 == Description ==
 
-[Logtivity](https://logtivity.io) allow you to track the user activity on your site. Then you can turn that activity data into beautiful charts. You can also use the data to send notifications to your email or Slack. Plus, you can easily search and export the information. 
+[Logtivity](https://logtivity.io) allow you to track the user activity on your site. Then you can turn that activity data into beautiful charts. You can also use the data to send notifications to your email or Slack. Plus, you can easily search and export the information.
 
 If you have customers on your WordPress site, you’ll find Logtivity to be invaluable. Because Logtivity records all the important activity, you can see real customer journeys across your site. This can be incredibly helpful for customer support: you can see exactly what a user has done on your site.
 
-To get started, simply install the Logtivity plugin and then connect your site to [Logtivity.io](https://logtivity.io)[Logtivity](https://logtivity.io). You’ll immediately start to see the results. You will see everything this user has done from installing plugins and updating posts, to changing blocks and plugin settings.
+To get started, simply install the Logtivity plugin and then connect your site to [Logtivity](https://logtivity.io). You’ll immediately start to see the results. You will see everything this user has done from installing plugins and updating posts, to changing blocks and plugin settings.
 
 Yes, Logtivity will keep a record of the activity on your website. However, that’s just where the magic begins. You can then use your data in Logtivity and do three additional things:
 
 1. Create beautiful charts
 2. Send alert notifications
-3. Export reports to CSV 
+3. Export reports to CSV
 
 Here’s an introduction to those three options, starting with charts:
 
-= #1. Create beautiful charts from your activity log = 
+= #1. Create beautiful charts from your activity log =
 
 This image on the top of this page shows what's possible with Logtivity. First, I searched my site’s data for file downloads and then clicked the “Convert to Report” button. Logtivity did the rest. With a couple of mouse clicks, I’ve created a chart showing all the daily file downloads.
 
@@ -38,7 +39,7 @@ Logtivity customers can build a whole dashboard full of charts, so you can quick
 
 Once your site is connected to Logtivity, you can set up unlimited alerts for any activity you want to know about as soon as it happens. You can send the alerts to your inbox or Slack channel.
 
-One Logtivity customer employs various writers, so they’ve set up a series of Slack alerts that show when the writers log in. You can use this as a security alert, letting you know every time someone in the Administrator role logs in. 
+One Logtivity customer employs various writers, so they’ve set up a series of Slack alerts that show when the writers log in. You can use this as a security alert, letting you know every time someone in the Administrator role logs in.
 
 Another customer sends themselves an email every time a plugin or theme is updated. They only run updates on Monday, but realized that some plugins will run their own auto-updates. Logtivity allows them to be constantly aware of all site changes. A third customer sends themselves an alert every time there have been no plugin updates in the last week! They want to make sure they don’t forget to run updates.
 
@@ -48,7 +49,7 @@ eCommerce sites can use Logtivity for convenient notifications and set up alerts
 
 = #3. Export user activity logs to CSV =
 
-Logtivity was started because one of our clients had reporting problems due to the amount of data collected on their site. The client was using a plugin that stored data in the WordPress database. Whenever we tried to export large amounts of logs, the site would show 502 errors. We needed to have the information stored separately. Being a dedicated service, Logtivity can optimize for things such as exporting 100,000 logs. 
+Logtivity was started because one of our clients had reporting problems due to the amount of data collected on their site. The client was using a plugin that stored data in the WordPress database. Whenever we tried to export large amounts of logs, the site would show 502 errors. We needed to have the information stored separately. Being a dedicated service, Logtivity can optimize for things such as exporting 100,000 logs.
 
 [Click here to see more about activity log exports](https://logtivity.io/docs/export-data/).
 
@@ -85,7 +86,7 @@ Below is a list of all core WordPress actions that Logtivity records for your si
 
 Logtivity provides a flexible API to log and store custom events. [Click here to see more about custom activity logs](https://logtivity.io/docs/custom-events/).
 
-You can control what personal data is stored by Logtivity. Click here to see more about personal data in Logtivity](https://logtivity.io/docs/personal-data/.
+You can control what personal data is stored by Logtivity. Click here to see more about personal data in Logtivity](https://logtivity.io/docs/personal-data/).
 
 == Screenshots ==
 
@@ -147,6 +148,8 @@ add_action('wp_logtivity_instance', function($Logtivity_Logger) {
 == Changelog ==
 
 = 1.6.1 =
+
+_Release Date – Wednesday 4th August 2021_
 
 * Begin adding support for the Easy Digital Downloads Software Licensing Addon.
 * Log License Created events.

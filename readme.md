@@ -1,4 +1,4 @@
-=== Logtivity: WordPress Activity Log With Charts and Notificatioons ===
+=== Logtivity: WordPress Activity Log With Charts and Notifications ===
 
 Contributors: logtivity
 Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity, easy digital downloads, edd
@@ -17,7 +17,7 @@ Logtivity logs the user activity on your site. You can use activity data for cha
 
 If you have customers on your WordPress site, you’ll find Logtivity to be invaluable. Because Logtivity records all the important activity, you can see real customer journeys across your site. This can be incredibly helpful for customer support: you can see exactly what a user has done on your site.
 
-To get started, simply install the Logtivity plugin and then connect your site to [Logtivity.io](https://logtivity.io)[Logtivity](https://logtivity.io). You’ll immediately start to see the results. You will see everything this user has done from installing plugins and updating posts, to changing blocks and plugin settings.
+To get started, simply install the Logtivity plugin and then connect your site to [Logtivity](https://logtivity.io). You’ll immediately start to see the results. You will see everything this user has done from installing plugins and updating posts, to changing blocks and plugin settings.
 
 Yes, Logtivity will keep a record of the activity on your website. However, that’s just where the magic begins. You can then use your data in Logtivity and do three additional things:
 
@@ -86,7 +86,7 @@ Below is a list of all core WordPress actions that Logtivity records for your si
 
 Logtivity provides a flexible API to log and store custom events. [Click here to see more about custom activity logs](https://logtivity.io/docs/custom-events/).
 
-You can control what personal data is stored by Logtivity. Click here to see more about personal data in Logtivity](https://logtivity.io/docs/personal-data/.
+You can control what personal data is stored by Logtivity. Click here to see more about personal data in Logtivity](https://logtivity.io/docs/personal-data/).
 
 == Screenshots ==
 
@@ -148,6 +148,8 @@ add_action('wp_logtivity_instance', function($Logtivity_Logger) {
 == Changelog ==
 
 = 1.6.1 =
+
+_Release Date – Wednesday 4th August 2021_
 
 * Begin adding support for the Easy Digital Downloads Software Licensing Addon.
 * Log License Created events.
