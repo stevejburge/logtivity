@@ -1,4 +1,5 @@
 === Logtivity: WordPress Activity Log With Charts and Notificatioons ===
+
 Contributors: logtivity
 Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity, easy digital downloads, edd
 Requires at least: 4.7
