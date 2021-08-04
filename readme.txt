@@ -86,7 +86,7 @@ Below is a list of all core WordPress actions that Logtivity records for your si
 
 Logtivity provides a flexible API to log and store custom events. [Click here to see more about custom activity logs](https://logtivity.io/docs/custom-events/).
 
-You can control what personal data is stored by Logtivity. Click here to see more about personal data in Logtivity](https://logtivity.io/docs/personal-data/).
+You can control what personal data is stored by Logtivity. Click here to see more about personal data in [Logtivity](https://logtivity.io/docs/personal-data/).
 
 == Screenshots ==
 
