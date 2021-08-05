@@ -13,7 +13,7 @@ Logtivity logs the user activity on your site. You can use activity data for cha
 
 == Description ==
 
-[Logtivity](https://logtivity.io) allow you to track the user activity on your site. Then you can turn that activity data into beautiful charts. You can also use the data to send notifications to your email or Slack. Plus, you can easily search and export the information.
+[Logtivity](https://logtivity.io) allows you to track the user activity on your site. Then you can turn that activity data into beautiful charts. You can also use the data to send notifications to your email or Slack. Plus, you can easily search and export the information.
 
 If you have customers on your WordPress site, you’ll find Logtivity to be invaluable. Because Logtivity records all the important activity, you can see real customer journeys across your site. This can be incredibly helpful for customer support: you can see exactly what a user has done on your site.
 
@@ -29,7 +29,7 @@ Here’s an introduction to those three options, starting with charts:
 
 = #1. Create beautiful charts from your activity log =
 
-This image on the top of this page shows what's possible with Logtivity. First, I searched my site’s data for file downloads and then clicked the “Convert to Report” button. Logtivity did the rest. With a couple of mouse clicks, I’ve created a chart showing all the daily file downloads.
+The image on the top of this page shows what's possible with Logtivity. First, I searched my site’s data for file downloads and then clicked the “Convert to Report” button. Logtivity did the rest. With a couple of mouse clicks, I’ve created a chart showing all the daily file downloads.
 
 Logtivity customers can build a whole dashboard full of charts, so you can quickly see the number of logins, downloads, payments and anything else that's important to you.
 
@@ -133,7 +133,7 @@ Yes. You can choose to only log a profile link, user ID, username, IP address, o
 
 Yes! You can easily disable all default logging that this plugin provides so that you can only store the logs that matter to you manually.
 
-You can also disable buit in logs on an individual basis via the filter example below:
+You can also disable built in logs on an individual basis via the filter example below:
 
 `
 add_action('wp_logtivity_instance', function($Logtivity_Logger) {
