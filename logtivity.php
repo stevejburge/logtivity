@@ -65,6 +65,10 @@ class Logtivity
 		$this->loadDependancies();
 
 		add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), [$this, 'addSettingsLinkFromPluginsPage'] );
+
+		register_activation_hook( __FILE__, [$this, 'activated']);
+
+		add_action( 'admin_notices', [$this, 'welcomeMessage']);
 	}
 
 	public static function log($action = null, $meta = null, $user_id = null)
@@ -133,6 +137,20 @@ class Logtivity
 		);
 		
 		return array_merge($settings_links, $links);
+	}
+
+	public function activated()
+	{
+		set_transient( 'logtivity-welcome-notice', true, 5 );
+	}
+
+	public function welcomeMessage() 
+	{
+		if(get_transient( 'logtivity-welcome-notice') ) {
+			echo logtivity_view('activation');
+			
+		    delete_transient( 'logtivity-welcome-notice' );
+		}
 	}
 }
 
