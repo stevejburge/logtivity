@@ -9,6 +9,7 @@ class Logtivity_Core extends Logtivity_Abstract_Logger
 		add_filter( 'widget_update_callback', [$this, 'widgetUpdated'], 10, 4);
 		add_action('init', [$this, 'maybeSettingsUpdated']);
 		add_action( 'permalink_structure_changed', [$this, 'permalinksUpdated'], 10, 2);
+		// do_action_ref_array( 'phpmailer_init', array( &$phpmailer ) );
 	}
 
 	public function upgradeProcessComplete( $upgrader_object, $options ) 
