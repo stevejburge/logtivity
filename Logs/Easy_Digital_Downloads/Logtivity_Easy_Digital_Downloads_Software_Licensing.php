@@ -12,7 +12,6 @@ class Logtivity_Easy_Digital_Downloads_Software_Licensing
 		add_action('edd_sl_deactivate_license', [$this, 'licenseDeactivated'], 10, 2);
 		add_action('edd_sl_license_upgraded', [$this, 'licenseUpgraded'], 10, 2);
 		add_action('edd_sl_post_set_status', [$this, 'licenseStatusUpdated'], 10, 2);
-		add_action('edd_sl_license_unsubscribed', [$this, 'unsubscribedFromRenewalNotices'], 10, 1);
 		add_action('edd_sl_post_license_renewal', [$this, 'licenseRenewed'], 10, 2);
 	}
 
@@ -165,17 +164,6 @@ class Logtivity_Easy_Digital_Downloads_Software_Licensing
 
 		Logtivity_Logger::log()
 			->setAction('License Status Changed to ' . ucfirst($status))
-			->setContext($license->key)
-			->addMeta('Customer ID', $license->customer_id)
-			->send();
-	}
-
-	public function unsubscribedFromRenewalNotices($license_id)
-	{
-		$license = edd_software_licensing()->get_license($license_id);
-
-		Logtivity_Logger::log()
-			->setAction('License Renewal Notification Unsubscribed')
 			->setContext($license->key)
 			->addMeta('Customer ID', $license->customer_id)
 			->send();
