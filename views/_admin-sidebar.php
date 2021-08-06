@@ -17,6 +17,13 @@
 					'logtivity'
 				); ?></a>
 			</p>
+			<p>
+				<a class="button-primary" target="_blank" href="https://app.logtivity.io/team-settings/subscription"><?php esc_attr_e(
+					'Manage Subscription',
+					'logtivity'
+				); ?></a>
+			</p>
+			
 		</div>
 		<!-- .inside -->
 

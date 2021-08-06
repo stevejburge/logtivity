@@ -6,6 +6,7 @@
  * Description: Dedicated Event Monitoring for WordPress using Logtivity.io.
  * Version:     1.6.1
  * Author:      Logtivity
+ * Text Domain: logtivity
  */
 
 class Logtivity
@@ -148,7 +149,7 @@ class Logtivity
 	{
 		if(get_transient( 'logtivity-welcome-notice') ) {
 			echo logtivity_view('activation');
-			
+
 		    delete_transient( 'logtivity-welcome-notice' );
 		}
 	}
