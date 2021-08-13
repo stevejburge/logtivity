@@ -54,11 +54,15 @@ class Logtivity
 			'Logs/Memberpress/Logtivity_Memberpress',
 		],
 		'Easy_Digital_Downloads' => [
+			'Logs/Easy_Digital_Downloads/Logtivity_Abstract_Easy_Digital_Downloads',
 			'Logs/Easy_Digital_Downloads/Logtivity_Easy_Digital_Downloads'
 		],
 		'EDD_Software_Licensing' => [
 			'Logs/Easy_Digital_Downloads/Logtivity_Easy_Digital_Downloads_Software_Licensing'
 		],
+		'EDD_Recurring' => [
+			'Logs/Easy_Digital_Downloads/Logtivity_Easy_Digital_Downloads_Recurring'
+		]
 	];
 
 	public function __construct()

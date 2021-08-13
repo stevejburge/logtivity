@@ -1,6 +1,6 @@
 <?php
 
-class Logtivity_Easy_Digital_Downloads_Software_Licensing
+class Logtivity_Easy_Digital_Downloads_Software_Licensing extends Logtivity_Abstract_Easy_Digital_Downloads
 {
 	protected $deactivatingLicenseArgs;
 
@@ -13,6 +13,8 @@ class Logtivity_Easy_Digital_Downloads_Software_Licensing
 		add_action('edd_sl_license_upgraded', [$this, 'licenseUpgraded'], 10, 2);
 		add_action('edd_sl_post_set_status', [$this, 'licenseStatusUpdated'], 10, 2);
 		add_action('edd_sl_post_license_renewal', [$this, 'licenseRenewed'], 10, 2);
+		add_action('edd_deactivate_site', [$this, 'siteDeactivated'], 9);
+		add_action('edd_insert_site', [$this, 'siteAdded'], 9);
 	}
 
 	public function licenseCreated($license_id, $purchased_download_id, $payment_id, $type)
@@ -21,11 +23,13 @@ class Logtivity_Easy_Digital_Downloads_Software_Licensing
 
 		Logtivity_Logger::log()
 			->setAction('License Created')
-			->setContext($license->key)
+			->setContext($this->getDownloadTitle($license))
 			->setUser($license->user_id ?? null)
+			->addMeta('License Key', $license->key)
+			->addMeta('Customer ID', $license->customer_id)
 			->addMeta('Payment ID', $payment_id)
 			->addMeta('Type', $type)
-			->addMeta('Customer ID', $license->customer_id)
+			->addMeta('Download ID', $purchased_download_id)
 			->send();
 	}
 
@@ -34,16 +38,22 @@ class Logtivity_Easy_Digital_Downloads_Software_Licensing
 		$license = edd_software_licensing()->get_license($args['key'], true);
 
 		$log = Logtivity_Logger::log()
-			->setContext($args['key']);
+			->addMeta('License Key', $args['key']);
 
 		if ( false !== $license ) {
-			$log->setUser($license->user_id ?? null);
+			$log->setContext($this->getDownloadTitle($license));
+
+			if (!is_user_logged_in()) {
+				$log->setUser($license->user_id ?? null);
+			}
 			try {
 				if ($license->customer_id) {
 					$log->addMeta('Customer ID', $license->customer_id);
 				}
 			} catch (\Exception $e) {
 			}
+		} else {
+			$log->setContext($args['key']);
 		}
 
 		if (isset($args['url'])) {
@@ -104,8 +114,12 @@ class Logtivity_Easy_Digital_Downloads_Software_Licensing
 
 		$log = Logtivity_Logger::log()
 			->setAction('License Deactivated')
-			->setContext($this->deactivatingLicenseArgs['key'])
-			->setUser($license->user_id ?? null);
+			->setContext($this->getDownloadTitle($license))
+			->addMeta('License Key', $this->deactivatingLicenseArgs['key']);
+
+			if (!is_user_logged_in()) {
+				$log->setUser($license->user_id ?? null);
+			}
 
 			try {
 				if ($license->customer_id) {
@@ -124,7 +138,12 @@ class Logtivity_Easy_Digital_Downloads_Software_Licensing
 
 		$log = Logtivity_Logger::log()
 			->setAction('License Upgraded')
-			->setContext($license->key);
+			->setContext($this->getDownloadTitle($license))
+			->addMeta('License Key', $license->key);
+
+		if (!is_user_logged_in()) {
+			$log->setUser($license->user_id ?? null);
+		}
 
 		if (isset($args['payment_id'])) {
 			$log->addMeta('Payment ID', $args['payment_id']);
@@ -162,10 +181,16 @@ class Logtivity_Easy_Digital_Downloads_Software_Licensing
 	{
 		$license = edd_software_licensing()->get_license($license_id);
 
-		Logtivity_Logger::log()
+		$log = Logtivity_Logger::log()
 			->setAction('License Status Changed to ' . ucfirst($status))
-			->setContext($license->key)
-			->addMeta('Customer ID', $license->customer_id)
+			->setContext($this->getDownloadTitle($license))
+			->addMeta('License Key', $license->key);
+
+		if (!is_user_logged_in()) {
+			$log->setUser($license->user_id ?? null);
+		}
+
+		$log->addMeta('Customer ID', $license->customer_id)
 			->send();
 	}
 
@@ -175,14 +200,137 @@ class Logtivity_Easy_Digital_Downloads_Software_Licensing
 
 		$log = Logtivity_Logger::log()
 			->setAction('License Renewed')
-			->setContext($license->key)
+			->setContext($this->getDownloadTitle($license))
+			->addMeta('License Key', $license->key)
 			->addMeta('Customer ID', $license->customer_id);
+
+		if (!is_user_logged_in()) {
+			$log->setUser($license->user_id ?? null);
+		}
 
 		try {
 			$log->addMeta('New Expiration Date', date('M d Y', $new_expiration));
 		} catch (\Exception $e) {
 		}
 		
+		$log->send();
+	}
+
+	/**
+	 * 
+	 * Taken from edd_sl_process_deactivate_site as there are no hooks for when a 
+	 * user deactivates a site from within their dashboard. 
+	 * 
+	 * Use same validation code as in the original method, then log it.
+	 * 
+	 */
+	public function siteDeactivated() 
+	{
+		if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'edd_deactivate_site_nonce' ) ) {
+			return;
+		}
+
+		$license_id = absint( $_GET['license'] );
+		$license    = edd_software_licensing()->get_license( $license_id );
+
+		if ( $license_id !== $license->ID ) {
+			return;
+		}
+
+		if ( ( is_admin() && ! current_user_can( 'manage_licenses' ) ) || ( ! is_admin() && $license->user_id != get_current_user_id() ) ) {
+			return;
+		}
+
+		$site_url = ! empty( $_GET['site_url'] ) ? urldecode( $_GET['site_url'] ) : false;
+		$site_id  = ! empty( $_GET['site_id'] ) ? absint( $_GET['site_id'] ) : false;
+
+		if ( empty( $site_url ) && empty( $site_id ) ) {
+			return;
+		}
+
+		$site = ! empty( $site_id ) ? $site_id : $site_url;
+
+		/**
+		 * If we've made it this far let's log it.
+		 */
+
+		$log = Logtivity_Logger::log()
+			->setAction('Site Deactivated')
+			->setContext($this->getDownloadTitle($license))
+			->addMeta('License Key', $license->key)
+			->addMeta('Site ID', $site);
+
+		if (!is_user_logged_in()) {
+			$log->setUser($license->user_id ?? null);
+		}
+
+		try {
+			if ($license->customer_id) {
+				$log->addMeta('Customer ID', $license->customer_id);
+			}
+		} catch (\Exception $e) {
+		}
+
+		$log->send();
+	}
+
+	/**
+	 * 
+	 * Taken from edd_sl_process_add_site as there are no hooks for when a 
+	 * user adds a site from within their dashboard. 
+	 * 
+	 * Use same validation code as in the original method, then log it.
+	 * 
+	 */
+	public function siteAdded()
+	{
+		if ( ! wp_verify_nonce( $_POST['edd_add_site_nonce'], 'edd_add_site_nonce' ) ) {
+			return;
+		}
+
+		if ( ! empty( $_POST['license_id'] ) && empty( $_POST['license'] ) ) {
+			// In 3.5, we switched from checking for license_id to just license. Fallback check for backwards compatibility
+			$_POST['license'] = $_POST['license_id'];
+		}
+
+		$license_id  = absint( $_POST['license'] );
+		$license     = edd_software_licensing()->get_license( $license_id );
+		if ( $license_id !== $license->ID ) {
+			return;
+		}
+
+		if ( ( is_admin() && ! current_user_can( 'manage_licenses'  ) ) || ( ! is_admin() && $license->user_id != get_current_user_id() ) ) {
+			return;
+		}
+
+		$site_url = sanitize_text_field( $_POST['site_url'] );
+
+		if ( $license->is_at_limit() && ! current_user_can( 'manage_licenses' ) ) {
+			// The license is at its activation limit so stop and show an error
+			return;
+		}
+
+		/**
+		 * If we've made it this far let's log it.
+		 */
+
+		$log = Logtivity_Logger::log()
+			->setAction('Site Added')
+			->setContext($this->getDownloadTitle($license))
+			->addMeta('License Key', $license->key)
+			->addMeta('Site', $site_url);
+
+		if (!is_user_logged_in()) {
+			$log->setUser($license->user_id ?? null);
+		}
+
+		try {
+			if ($license->customer_id) {
+				$log->addMeta('Customer ID', $license->customer_id);
+			}
+		} catch (\Exception $e) {
+		}
+
 		$log->send();
 	}
 }

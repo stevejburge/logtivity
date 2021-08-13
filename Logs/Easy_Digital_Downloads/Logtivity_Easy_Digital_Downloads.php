@@ -1,11 +1,11 @@
 <?php
 
-class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
+class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Easy_Digital_Downloads
 {
 	public function __construct()
 	{
 		add_action('edd_post_add_to_cart',  [$this, 'itemAddedToCart'], 10, 3);
-		add_action('edd_post_remove_from_cart',  [$this, 'itemRemovedFromCart'], 10, 3);
+		add_action('edd_post_remove_from_cart',  [$this, 'itemRemovedFromCart'], 10, 2);
 		add_action('edd_customer_post_create', [$this, 'customerCreated'], 10, 2);
 		add_action('edd_update_payment_status', [$this, 'paymentStatusUpdated'], 10, 3);
 		add_action('edd_process_verified_download', [$this, 'fileDownloaded'], 10, 4);
@@ -36,19 +36,10 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 
 	public function itemRemovedFromCart($key, $item_id)
 	{
-		$log = Logtivity_Logger::log()
+		Logtivity_Logger::log()
 			->setAction('Download Removed from Cart')
-			->setContext(get_the_title($item_id));
-
-		$prices = edd_get_variable_prices($item_id);
-
-		if ($prices && count($prices)) {
-			if (isset($prices[$key]['name'])) {
-				$log->addMeta('Variable Item', $prices[$key]['name']);
-			}
-		}
-
-		$log->send();
+			->setContext(get_the_title($item_id))
+			->send();
 	}
 
 	public function paymentStatusUpdated($payment_id, $status, $old_status)
@@ -63,10 +54,18 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 			return $this->paymentCompleted($payment);
 		}
 
+		if ($status == 'edd_subscription') {
+			return;
+		}
+
 		Logtivity_Logger::log()
-			->setAction('Payment ' . ucfirst($status))
+			->setAction('Payment Status Changed to ' . ucfirst($status))
 			->setContext($this->getPaymentKey($payment))
 			->addMeta('Payment Key', $this->getPaymentKey($payment))
+			->addMeta('Total', $payment->total)
+			->addMeta('Currency', $payment->currency)
+			->addMeta('Gateway', $payment->gateway)
+			->addMeta('Customer ID', $payment->customer_id)
 			->send();
 	}
 
@@ -83,8 +82,6 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 			$log->addMeta('Cart Item', $item['name']);
 		}
 
-		$customer = new EDD_Customer($payment->get_meta( '_edd_payment_customer_id', true ));
-
 		if ($payment->discounts != 'none') {
 			$log->addMeta('Discount Code', $payment->discounts);
 		}
@@ -92,7 +89,7 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 		$log->addMeta('Total', $payment->total)
 			->addMeta('Currency', $payment->currency)
 			->addMeta('Gateway', $payment->gateway)
-			->addMeta('Customer ID', $customer->id)
+			->addMeta('Customer ID', $payment->customer_id)
 			->send();
 	}
 
@@ -103,6 +100,7 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 			->setContext($this->getPaymentKey($EDD_Payment))
 			->addMeta('Amount', $EDD_Payment->get_meta('_edd_payment_total'))
 			->addMeta('Payment Key', $this->getPaymentKey($EDD_Payment))
+			->addMeta('Customer ID', $EDD_Payment->customer_id)
 			->send();
 	}
 
@@ -134,24 +132,16 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Logger
 
 		$payment = new EDD_Payment($payment);
 
-		$customer = new EDD_Customer($payment->get_meta( '_edd_payment_customer_id', true ));
-
 		$log = Logtivity_Logger::log()
 			->setAction('File Downloaded')
-			->setContext($download->post_title)
+			->setContext($this->getDownloadTitle($download->get_ID(), $args['price_id'] ?? null))
 			->addMeta('Payment Key', $this->getPaymentKey($payment));
 
-		if (isset($args['price_id'])) {
-			$prices = edd_get_variable_prices($download->get_ID());
-
-			if ($prices && count($prices)) {
-				if (isset($prices[$args['price_id']]['name'])) {
-					$log->addMeta('Variable Item', $prices[$args['price_id']]['name']);
-				}
-			}
+		if (isset($args['file_key'])) {
+			$log->addMeta('File ID', $args['file_key']);
 		}
 
-		$log->addMeta('Customer ID', $customer->id)
+		$log->addMeta('Customer ID', $payment->customer_id)
 			->send();
 	}
 
