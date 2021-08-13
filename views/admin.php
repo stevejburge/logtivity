@@ -131,4 +131,4 @@
 
 <?php endif ?>
 
-<?php echo logtivity_view('_admin-footer'); ?>
+<?php echo logtivity_view('_admin-footer', compact('options')); ?>
