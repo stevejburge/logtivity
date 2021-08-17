@@ -4,7 +4,7 @@ Contributors: logtivity, stevejburge
 Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity, easy digital downloads, edd
 Requires at least: 4.7
 Tested up to: 5.8
-Stable tag: 1.6.1
+Stable tag: 1.7.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -146,6 +146,24 @@ add_action('wp_logtivity_instance', function($Logtivity_Logger) {
 `
 
 == Changelog ==
+
+= 1.7.0 =
+
+_Release Date – Wednesday 17th August 2021_
+
+* Improvements to Settings page.
+* Log EDD License Renewed
+* Log EDD License Renewal Notification Unsubscribed
+* Log EDD License Status Changed to [new_status]
+* Log EDD License Upgraded
+* Log EDD Site Deactivated
+* Log EDD Site Added
+* Log EDD Subscription Renewed
+* Log EDD Subscription Created
+* Log EDD Subscription Updated
+* Log EDD Subscription [status] eg. Expired, Cancelled etc.
+* Log EDD Subscription Deleted
+* Log EDD Payment Method Updated
 
 = 1.6.1 =
 
