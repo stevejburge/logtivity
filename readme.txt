@@ -1,7 +1,7 @@
-=== Logtivity: WordPress Activity Log With Charts and Notifications ===
+=== WordPress User Activity Log Plugin - Logtivity ===
 
 Contributors: logtivity, stevejburge
-Tags: logtivity, activity log, logging, event monitoring, download monitor, memberpress, user activity, easy digital downloads, edd
+Tags: activity log, logging, event monitoring, user activity, easy digital downloads, edd
 Requires at least: 4.7
 Tested up to: 5.8
 Stable tag: 1.7.0
@@ -9,25 +9,30 @@ Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Logtivity logs the user activity on your site. You can use activity data for charts and notifications. Plus, you can easily search and export the data.
+Logtivity is the best activity log plugin for WordPress. Keep an accurate activity log of everything happening on your WordPress site.
 
 == Description ==
 
-[Logtivity](https://logtivity.io) allows you to track the user activity on your site. Then you can turn that activity data into beautiful charts. You can also use the data to send notifications to your email or Slack. Plus, you can easily search and export the information.
+<strong>Logtivity is an activity log that helps you understand exactly what’s happening on your WordPress site.</strong><br /> 
 
-If you have customers on your WordPress site, you’ll find Logtivity to be invaluable. Because Logtivity records all the important activity, you can see real customer journeys across your site. This can be incredibly helpful for customer support: you can see exactly what a user has done on your site.
+[Logtivity](https://logtivity.io) is the best activity log for WordPress. You can record all the user activity on your site. Then you can turn the activity log data into beautiful, useful charts. You can also use the activity log data to send notifications to email or Slack. Plus, you can easily search and export the information.
+
+If you have customers on your WordPress site, you’ll find Logtivity to be invaluable. Because Logtivity records all the important activity, you can see real customer journeys across your WordPress site. This can be incredibly helpful for customer support: the actiivty log will show see exactly what a user has done on your site.
 
 To get started, simply install the Logtivity plugin and then connect your site to [Logtivity](https://logtivity.io). You’ll immediately start to see the results. You will see everything this user has done from installing plugins and updating posts, to changing blocks and plugin settings.
 
+> <strong>Logtivity is a SaaS service</strong><br />
+> You will need to create a Logtivity account to store your activity logs. <a href="https://app.logtivity.io/register" rel="friend" title="Logtivity">Click here to get started with Logtivity!</a>
+
 Yes, Logtivity will keep a record of the activity on your website. However, that’s just where the magic begins. You can then use your data in Logtivity and do three additional things:
 
-1. Create beautiful charts
-2. Send alert notifications
-3. Export reports to CSV
+* Create beautiful activity log charts to visualize your data.
+* Send alert notifications to Slack and email.
+* Easily export activity log reports to CSV files, not matter how many logs you have.
 
-Here’s an introduction to those three options, starting with charts:
+Here’s an introduction to those three options, showing why Logtivity is the best activity log plugin for WordPress:
 
-= #1. Create beautiful charts from your activity log =
+### Create beautiful charts from your activity log
 
 The image on the top of this page shows what's possible with Logtivity. First, I searched my site’s data for file downloads and then clicked the “Convert to Report” button. Logtivity did the rest. With a couple of mouse clicks, I’ve created a chart showing all the daily file downloads.
 
@@ -35,7 +40,7 @@ Logtivity customers can build a whole dashboard full of charts, so you can quick
 
 [Click here to see more about activity log charts](https://logtivity.io/docs/reports/).
 
-= #2. Send notifications for user activity =
+### Send Email and Slack notifications for user activity
 
 Once your site is connected to Logtivity, you can set up unlimited alerts for any activity you want to know about as soon as it happens. You can send the alerts to your inbox or Slack channel.
 
@@ -47,13 +52,13 @@ eCommerce sites can use Logtivity for convenient notifications and set up alerts
 
 [Click here to see more about activity log notifications](https://logtivity.io/docs/notifications/).
 
-= #3. Export user activity logs to CSV =
+### Export user activity logs to CSV
 
 Logtivity was started because one of our clients had reporting problems due to the amount of data collected on their site. The client was using a plugin that stored data in the WordPress database. Whenever we tried to export large amounts of logs, the site would show 502 errors. We needed to have the information stored separately. Being a dedicated service, Logtivity can optimize for things such as exporting 100,000 logs.
 
 [Click here to see more about activity log exports](https://logtivity.io/docs/export-data/).
 
-= What user activities does Logtivity record? =
+### What user activities does Logtivity record?
 
 Below is a list of all core WordPress actions that Logtivity records for your site. In addition to support for the WordPress core, Logtivity records events for many plugins and themes.
 
@@ -84,9 +89,53 @@ Below is a list of all core WordPress actions that Logtivity records for your si
 * Plugin Installed 
 * Plugin File Edited
 
-Logtivity provides a flexible API to log and store custom events. [Click here to see more about custom activity logs](https://logtivity.io/docs/custom-events/).
-
 You can control what personal data is stored by Logtivity. Click here to see more about personal data in [Logtivity](https://logtivity.io/docs/personal-data/).
+
+### Easy Digital Downloads activity logs
+
+Logtivity has detailed activity log support for the Easy Digital Downloads plugin and some extensions. Easy Digital Downloads is one of the best and most popular ways to sell digital products with WordPress. The activity logs, reports, and notifications provided by Logtivity will be helpful for anyone selling with Easy Digital Downloads.
+
+Inside Logtivity, you will find support for the main Easy Digital Downloads plugin, including these actions:
+
+* File Downloaded
+* Payment Completed
+* Payment Refunded
+* Customer Created
+* Download Added to Cart
+* Download Removed from Cart
+* Discount Applied
+* Discount Published
+* Discount Trashed
+* Discount Updated
+
+There’s also support for the Software Licensing extension and the the Recurring Payments extension:
+
+* License Created
+* License Activated
+* License Activation Failed
+* License Deactivated
+* License Renewed
+* License Renewal Notification Unsubscribed
+* License Status Changed
+* License Upgraded
+* Site Deactivated
+* Site Added
+* Subscription Renewed
+* Subscription Created
+* Subscription Updated
+* Subscription Status Changed
+* Subscription Deleted
+* Payment Method Updated
+
+### Activity logs for WordPress user logins
+
+It’s important to track activity on your WordPress site. You need to know many people are visiting, making purchases, and logging in to your site. Yes, you can track visitors with Google Analytics, and you can track purchases with your payment gateway, but it’s harder to track WordPress-specific information such as log ins. Using Logtivity, you can get an overview of who is logging in to your site, and how many people are logging in every day.
+
+If Logtivity is active on your site, you can go to the “Logs” screen and search for all the “User Logged in” events. You can use the search boxes to drill down for more specific information. For example, you can use the “Context” box to search for a particular user role. You can use this to search for all "Administrator" logins or all "Editor" logins.
+
+You can also use the search option as a security log and look for nefarious patterns in the logins. For example, you can search by IP address to see if one person is using multiple logins. Or you can search by username to see if one account is being shared by different people.
+
+[Click here to see more about activity logs for user logins](ttps://logtivity.io/track-user-logins-wordpress/).
 
 == Screenshots ==
 
@@ -112,9 +161,19 @@ Enter your Logtivity API key, configure your options and your good to go!
 
 == Frequently Asked Questions ==
 
+= What plugins do Logtivity activity logs support? =
+
+Logtivity has some support for most WordPress plugins. If the plugin uses post types, we record when most post types are updated/created or deleted.
+
+We currently have integrations with Easy Digital Downloads, Memberpress and Download Monitor. These integrations allow you to track things like Memberpress subscription creations, changes, or cancellations and also track when files are downloaded through Download Monitor.
+
+We are working on more detailed support for some key plugins, including eCommerce plugins such as WooCommerce and Easy Digital Downloads.
+
+Please contact us for specific details on any plugin that you are using.
+
 = Can I log custom events? =
 
-Yes, the plugin provides a flexible API to log and store custom events with Logtivity. An example of logging a custom event is below.
+Yes, the plugin provides a flexible API to log and store custom events with Logtivity. An example of logging a custom event is below. This example is recording information from Stripe.com for a customer:
 
 `
 Logtivity::log()
@@ -125,15 +184,27 @@ Logtivity::log()
 	->send();
 `
 
-= Can I disable user information being sent with the logs =
+[Click here to see more about custom activity logs](https://logtivity.io/docs/custom-events/).
 
-Yes. You can choose to only log a profile link, user ID, username, IP address, or nothing at all.
+= Is Logtivity a GDPR-compliant activity log? =
 
-= Can I disable all default logging and only store custom logs. =
+Yes, Logtivity gives you complete control over the user information recorded in the activity logs. You can choose to only log a profile link, user ID, username, IP address, or nothing at all. 
 
-Yes! You can easily disable all default logging that this plugin provides so that you can only store the logs that matter to you manually.
+* Inside your WordPress site, go to “Tools” and then “Logtivity”.
+* You can uncheck the boxes on this screen to stop Logtivity from recording personal data.
 
-You can also disable built in logs on an individual basis via the filter example below:
+Here's an overview of the key GDPR-compliant settings:
+
+* Store User ID: If you check this box, when logging an action, we will include the users User ID in the logged action.
+* Store Users Profile Link: If you check this box, when logging an action, we will include the users profile link in the logged action.
+* Store Users Username: If you check this box, when logging an action, we will include the users username in the logged action.
+* Store Users IP Address: If you check this box, when logging an action, we will include the users IP address in the logged action.
+
+[Click here for more about the GDPR and activity logs](https://logtivity.io/docs/personal-data/).
+
+= Can I disable all activity logs and only store custom logs? =
+
+Yes! You can easily disable all default logging that this plugin provides so that you can only store the logs that matter to you manually. You can also disable built in logs on an individual basis via the filter example below:
 
 `
 add_action('wp_logtivity_instance', function($Logtivity_Logger) {
@@ -144,6 +215,47 @@ add_action('wp_logtivity_instance', function($Logtivity_Logger) {
 
 });
 `
+[Click here for more about disabling activity logs](https://logtivity.io/docs/select-events/).
+
+= Can I rename the activity logs? =
+
+Yes, it is possible to rename the events that are stored in Logtivity’s logs. For example, you can add this code to your site’s functions.php file. This code will result in an event “File Downloaded” being logged as “Resource Downloaded”.
+
+`
+add_action('wp_logtivity_instance', function($Logtivity_Logger) {
+    if (strpos($Logtivity_Logger->action, 'File Downloaded') !== false) {
+        $Logtivity_Logger->setAction('Resource Downloaded');
+    }
+});
+`
+[Click here for more about renaming activity logs](https://logtivity.io/docs/rename-events/).
+
+= Can I export the activity logs? =
+
+Yes, Logtivity makes it easy to export your data into a CSV file.
+
+* To get started, visit the “Logs” area inside [https://app.logtivity.io](https://app.logtivity.io).
+* You can either search for a specific result, or you can use export all your logs.
+* When you see the logs you want to export, click “Actions” and then “Export to CSV”.
+* Logtivity will show you the following message: “Export scheduled”.
+* When the export file is ready, Logtivity will send you an email with a download link to the CSV file.
+
+[Click here to see more about exporting activity logs](https://logtivity.io/docs/export-data/).
+
+= Can I send activity log notifications to Slack channels? =
+
+Yes, You can use Logtivity to send alerts to your Slack account. Follow these steps to connect Logtivity to a channel in your Slack account:
+
+* In the Logtivity app, click on the name of your team.
+* Click "Alert Channels".
+* Check the "Slack" box.
+* Enter the name of your Slack channel.
+* Click the "Add Channel" button.
+* You will now see a screen where Slack asks you to allow Logtivity access. Click the "Allow" button.
+* You will be redirected back to the Logtivity app.
+* Any alert for this Logtivity team will now be sent to your Slack account.
+
+[Click here to see more about activity logs and Slack notifications](https://logtivity.io/docs/slack/).
 
 == Changelog ==
 
