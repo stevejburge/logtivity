@@ -62,7 +62,11 @@ class Logtivity
 		],
 		'EDD_Recurring' => [
 			'Logs/Easy_Digital_Downloads/Logtivity_Easy_Digital_Downloads_Recurring'
-		]
+		],
+		// 'FrmHooksController' => [
+		// 	'Logs/Formidable/Logtivity_FrmEntryFormatter',
+		// 	'Logs/Formidable/Logtivity_Formidable'
+		// ]
 	];
 
 	public function __construct()
