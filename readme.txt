@@ -1,4 +1,4 @@
-=== WordPress User Activity Log Plugin - Logtivity ===
+=== Activity Log - Monitor All WordPress Activities With Logtivity ===
 
 Contributors: logtivity, stevejburge
 Tags: activity log, logging, event monitoring, user activity, easy digital downloads, edd
@@ -17,9 +17,11 @@ Logtivity is the best activity log plugin for WordPress. Keep an accurate activi
 
 [Logtivity](https://logtivity.io) is the best activity log for WordPress. You can record all the user activity on your site. Then you can turn the activity log data into beautiful, useful charts. You can also use the activity log data to send notifications to email or Slack. Plus, you can easily search and export the information.
 
-If you have customers on your WordPress site, you’ll find Logtivity to be invaluable. Because Logtivity records all the important activity, you can see real customer journeys across your WordPress site. This can be incredibly helpful for customer support: the actiivty log will show see exactly what a user has done on your site.
+If you have customers on your WordPress site, you’ll find Logtivity to be invaluable. Because Logtivity records all the important activity, you can see real customer journeys across your WordPress site. This can be incredibly helpful for customer support: the activity log will show exactly what a user has done on your site.
 
 To get started, simply install the Logtivity plugin and then connect your site to [Logtivity](https://logtivity.io). You’ll immediately start to see the results. You will see everything this user has done from installing plugins and updating posts, to changing blocks and plugin settings.
+
+### Join Logtivity and Start Your Activity Log ###
 
 > <strong>Logtivity is a SaaS service</strong><br />
 > You will need to create a Logtivity account to store your activity logs. <a href="https://app.logtivity.io/register" rel="friend" title="Logtivity">Click here to get started with Logtivity!</a>
@@ -28,7 +30,7 @@ Yes, Logtivity will keep a record of the activity on your website. However, that
 
 * Create beautiful activity log charts to visualize your data.
 * Send alert notifications to Slack and email.
-* Easily export activity log reports to CSV files, not matter how many logs you have.
+* Easily export activity log reports to CSV files, no matter how many logs you have.
 
 Here’s an introduction to those three options, showing why Logtivity is the best activity log plugin for WordPress:
 
