@@ -2,8 +2,14 @@
 
 class Logtivity_Formidable
 {
-	protected $ignoreFieldTypes = [
+	protected $hashFieldTypes = [
 		'password',
+		'credit_card',
+	];
+
+	protected $ignoreFieldTypes = [
+		'divider',
+		'end_divider',
 	];
 
 	public function __construct()
@@ -29,7 +35,10 @@ class Logtivity_Formidable
 
 			foreach ($FrmEntryFormatter->logtivityGetEntryValues() as $key => $field_value) {
 				$field_value->prepare_displayed_value();
-				$log->addMeta($field_value->get_field_label(), $this->maybeLogFormValue($field_value));
+
+				if ($this->shouldStoreField($field_value)) {
+					$log->addMeta($field_value->get_field_label(), $this->maybeLogFormValue($field_value));
+				}
 			}
 
 			$log->send();
@@ -38,10 +47,29 @@ class Logtivity_Formidable
 		}
 	}
 
-	private function maybeLogFormValue($field_value)
+	private function shouldStoreField($field_value)
 	{
 		if (in_array($field_value->get_field_type(), $this->ignoreFieldTypes)) {
-			return '******';
+			return false;
+		}
+
+		$value = $field_value->get_displayed_value();
+
+		if (!$value) {
+			return false;
+		}
+
+		return apply_filters('logtivity_should_store_formidable_field_value', true, $field_value->get_field_key(), $field_value);
+	}
+
+	private function maybeLogFormValue($field_value)
+	{
+		if (in_array($field_value->get_field_type(), $this->hashFieldTypes)) {
+			return '********';
+		}
+
+		if ($field_value->get_field_type() == 'address') {
+			return str_replace(' <br/>', ', ', $field_value->get_displayed_value());
 		}
 
 		return $field_value->get_displayed_value();
@@ -49,3 +77,4 @@ class Logtivity_Formidable
 }
 
 $Logtivity_Formidable = new Logtivity_Formidable;
+
