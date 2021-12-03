@@ -11,6 +11,8 @@
 
 class Logtivity
 {
+	protected $version = '1.7.1';
+
 	/**
 	 * List all classes here with their file paths. Keep class names the same as filenames.
 	 * 
@@ -78,6 +80,8 @@ class Logtivity
 		register_activation_hook( __FILE__, [$this, 'activated']);
 
 		add_action( 'admin_notices', [$this, 'welcomeMessage']);
+
+		add_action('admin_enqueue_scripts', [$this, 'loadScripts']);
 	}
 
 	public static function log($action = null, $meta = null, $user_id = null)
@@ -160,6 +164,11 @@ class Logtivity
 
 		    delete_transient( 'logtivity-welcome-notice' );
 		}
+	}
+
+	public function loadScripts()
+	{
+		wp_enqueue_style( 'admin_css', plugin_dir_url(__FILE__) . 'assets/admin.css', false, $this->version );
 	}
 }
 

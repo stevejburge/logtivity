@@ -1,7 +1,7 @@
 <?php echo logtivity_view('_admin-header'); ?>
 
 <div class="postbox">
-	<div class="inside">
+	<div class="inside logtivity-settings">
 
 		<h1 style="padding-top: 20px;">Settings</h1>
 
