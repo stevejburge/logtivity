@@ -9,13 +9,13 @@ Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Logtivity is the best activity log plugin for WordPress. Keep an accurate activity log of everything happening on your WordPress site.
+Logtivity is the best activity log plugin for WordPress. Keep accurate activity logs of everything happening on your WordPress site.
 
 == Description ==
 
 <strong>Logtivity is an activity log that helps you understand exactly what’s happening on your WordPress site.</strong><br /> 
 
-[Logtivity](https://logtivity.io) is the best activity log for WordPress. You can record all the user activity on your site. Then you can turn the activity log data into beautiful, useful charts. You can also use the activity log data to send notifications to email or Slack. Plus, you can easily search and export the information.
+[Logtivity](https://logtivity.io) is the best activity log for WordPress. You can record all the user activity on your site. Then you can turn your activity logs into beautiful, useful charts. You can also use the activity log data to send notifications to email or Slack. Plus, you can easily search and export the information.
 
 If you have customers on your WordPress site, you’ll find Logtivity to be invaluable. Because Logtivity records all the important activity, you can see real customer journeys across your WordPress site. This can be incredibly helpful for customer support: the activity log will show exactly what a user has done on your site.
 
@@ -25,6 +25,8 @@ To get started, simply install the Logtivity plugin and then connect your site t
 
 > <strong>Logtivity is a SaaS service</strong><br />
 > You will need to create a Logtivity account to store your activity logs. <a href="https://app.logtivity.io/register" rel="friend" title="Logtivity">Click here to get started with Logtivity!</a>
+
+### Logtivity is an Activity Log and Much More! ###
 
 Yes, Logtivity will keep a record of the activity on your website. However, that’s just where the magic begins. You can then use your data in Logtivity and do three additional things:
 
@@ -165,9 +167,9 @@ Enter your Logtivity API key, configure your options and your event monitoring w
 
 Logtivity has some support for most WordPress plugins. If the plugin uses post types, we record when most post types are updated, created or deleted.
 
-We currently have integrations with Easy Digital Downloads, Memberpress and Download Monitor. These integrations allow you to track things like Memberpress subscription creations, changes, or cancellations and also track when files are downloaded through Download Monitor.
+We currently have integrations with Easy Digital Downloads, Formidable Forms Memberpress and Download Monitor. These integrations allow you to track things like Memberpress subscription creations, changes, or cancellations and also track when files are downloaded through Download Monitor.
 
-We are working on more detailed event monitor support for some key plugins, including eCommerce plugins such as WooCommerce and Easy Digital Downloads.
+We are working on more detailed event monitor support for some key plugins, including eCommerce plugins such as WooCommerce, Easy Digital Downloads.
 
 Please contact us for specific details on any plugin that you are using.
 
