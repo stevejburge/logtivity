@@ -278,6 +278,13 @@ Logtivity is the official brandname. When writing about this activity plugin, pl
 
 == Changelog ==
 
+= 1.8.0 =
+
+_Release Date – Wednesday 8th December 2021_
+
+* Added Formidable Pro integration.
+* Added CSS tweaks to Logtivity Settings page.
+
 = 1.7.1 =
 
 _Release Date – Sunday 7th November 2021_
