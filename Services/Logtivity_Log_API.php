@@ -69,7 +69,7 @@ class Logtivity_Log_API
 
 		$response = wp_remote_retrieve_body($response);
 
-		if ($shouldLogLatestResponse) {
+		if ($shouldLogLatestResponse && $this->notUpdatingWidgetInCustomizer()) {
 
 			$this->options->update([
 				'logtivity_latest_response' => [
@@ -81,5 +81,24 @@ class Logtivity_Log_API
 		}
 
 		return $response;
+	}
+
+	/**	
+	 * You cannot call an extra update_option during a widget update so we make 
+	 * sure not to log the most recent log response in this case.
+	 * 
+	 * @return bool
+	 */
+	private function notUpdatingWidgetInCustomizer()
+	{
+		if (!isset($_POST['wp_customize'])) {
+			return true;
+		}
+
+		if (!isset($_POST['action'])) {
+			return true;
+		}
+
+		return ! ($_POST['action'] === 'update-widget' && $_POST['wp_customize'] === 'on');
 	}
 }
