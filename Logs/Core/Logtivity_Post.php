@@ -97,10 +97,10 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 		
 		return Logtivity_Logger::log()
 			->setAction($this->getPostTypeLabel($post_id) . ' Trashed')
-			->setContext(get_the_title($post_id))
+			->setContext(logtivity_get_the_title($post_id))
 			->addMeta('Post ID', $post_id)
 			->addMeta('Post Type', get_post_type($post_id))
-			->addMeta('Post Title', get_the_title($post_id))
+			->addMeta('Post Title', logtivity_get_the_title($post_id))
 			->send();
 	}
 
@@ -123,7 +123,7 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 			return;
 		}
 
-		if ($this->ignoringPostTitle(get_the_title($post_id))) {
+		if ($this->ignoringPostTitle(logtivity_get_the_title($post_id))) {
 			return;
 		}
 
@@ -131,10 +131,10 @@ class Logtivity_Post extends Logtivity_Abstract_Logger
 			->setAction(
 				$this->getPostTypeLabel($post_id) . ' Permanently Deleted'
 			)
-			->setContext(get_the_title($post_id))
+			->setContext(logtivity_get_the_title($post_id))
 			->addMeta('Post ID', $post_id)
 			->addMeta('Post Type', get_post_type($post_id))
-			->addMeta('Post Title', get_the_title($post_id))
+			->addMeta('Post Title', logtivity_get_the_title($post_id))
 			->send();
 	}
 

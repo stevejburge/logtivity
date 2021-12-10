@@ -17,7 +17,7 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Easy_Digital_D
 	{
 		$log = Logtivity_Logger::log()
 			->setAction('Download Added to Cart')
-			->setContext(get_the_title($download_id));
+			->setContext(logtivity_get_the_title($download_id));
 
 		$prices = edd_get_variable_prices($download_id);
 
@@ -38,7 +38,7 @@ class Logtivity_Easy_Digital_Downloads extends Logtivity_Abstract_Easy_Digital_D
 	{
 		Logtivity_Logger::log()
 			->setAction('Download Removed from Cart')
-			->setContext(get_the_title($item_id))
+			->setContext(logtivity_get_the_title($item_id))
 			->send();
 	}
 

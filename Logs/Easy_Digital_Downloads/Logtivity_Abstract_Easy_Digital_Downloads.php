@@ -24,6 +24,6 @@ abstract class Logtivity_Abstract_Easy_Digital_Downloads
 			}
 		}
 
-		return get_the_title($download_id) . ( $priceOptionName ? ' - ' .$priceOptionName : '');
+		return logtivity_get_the_title($download_id) . ( $priceOptionName ? ' - ' .$priceOptionName : '');
 	}
 }

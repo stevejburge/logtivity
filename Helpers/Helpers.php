@@ -56,3 +56,15 @@ function logtivity_get_api_key() {
     return $api_key;
 
 }
+
+function logtivity_get_the_title($post_id) {
+    $wptexturize = remove_filter( 'the_title', 'wptexturize' );
+    
+    $title = get_the_title($post_id);
+
+    if ( $wptexturize ) {
+        add_filter( 'the_title', 'wptexturize' );
+    }
+
+    return $title;
+}

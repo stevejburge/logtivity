@@ -68,7 +68,7 @@ class Logtivity_Easy_Digital_Downloads_Recurring extends Logtivity_Abstract_Easy
 		$current_price_id = $subscription->price_id;
 
 		if (isset($args['product_id']) && $current_product != $args['product_id']) {
-			$log->setContext('Product changed from '.get_the_title($current_product).' to '.get_the_title($args['product_id']));
+			$log->setContext('Product changed from '.logtivity_get_the_title($current_product).' to '.logtivity_get_the_title($args['product_id']));
 		}
 
 		if ( isset( $args['price_id'] ) && ! is_null( $args['price_id'] ) && $current_price_id != $args['price_id'] ) {
@@ -89,7 +89,7 @@ class Logtivity_Easy_Digital_Downloads_Recurring extends Logtivity_Abstract_Easy
 
 		$log->addMeta('Customer ID', $subscription->customer_id)
 			->addMeta('Subscription ID', $subscription_id)
-			->addMeta('Product', get_the_title($args['product_id'] ?? $current_product));
+			->addMeta('Product', logtivity_get_the_title($args['product_id'] ?? $current_product));
 
 		if (!is_user_logged_in()) {
 			$log->setUser($subscription->customer->user_id ?? null);
