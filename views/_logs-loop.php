@@ -37,10 +37,12 @@
 	</tbody>
 </table>
 
-<?php if ($link->prev || $link->next): ?>
-	<div>
+<?php if ($meta->current_page): ?>
+	<div style="text-align: center; padding: 20px">
+	
+		<button <?php echo ( $meta->current_page == 1 ? 'disabled' : ''); ?> class="js-logtivity-pagination button-primary" data-page="<?php echo sanitize_text_field($meta->current_page - 1) ?>">Previous</button>
 		
-
+		<button <?php echo ( $meta->current_page >= $meta->last_page ? 'disabled' : ''); ?> class="js-logtivity-pagination button-primary" data-page="<?php echo sanitize_text_field($meta->current_page + 1) ?>">Next</button>
 
 	</div>
 <?php endif ?>

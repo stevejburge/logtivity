@@ -15,13 +15,18 @@ class Logtivity_Log_Index_Filter
 		}
 
 		$response = json_decode(
-			(new Logtivity_Api)->get('/logs', [])
+			(new Logtivity_Api)->get('/logs', [
+				'page' => $_GET['page'] ?? null,
+				'action' => $_GET['search_action'] ?? null,
+				'context' => $_GET['search_context'] ?? null,
+				'action_user' => $_GET['action_user'] ?? null,
+			])
 		);
 
 		return wp_send_json([
 			'view' => logtivity_view('_logs-loop', [
 				'logs' => $response->data,
-				'links' => $response->links,
+				'meta' => $response->meta,
 			])
 		]);
 	}
