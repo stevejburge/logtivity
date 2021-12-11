@@ -1,6 +1,6 @@
 <?php
 
-class Logtivity_Logger extends Logtivity_Log_API
+class Logtivity_Logger extends Logtivity_Api
 {
 	/**
 	 * Can this instance log something
@@ -188,7 +188,7 @@ class Logtivity_Logger extends Logtivity_Log_API
 			return;
 		}
 
-		return $this->makeRequest($this->getEndpoint('/logs/store'), $this->getData());
+		return $this->makeRequest('/logs/store', $this->getData());
 	}
 
 	/**	

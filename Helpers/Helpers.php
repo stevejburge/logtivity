@@ -33,10 +33,9 @@ function logtivity_view($fileName, $vars = array()) {
 
     ob_start();
 
-    include( dirname(__FILE__) . '/../views/' . $fileName . '.php');
+    include( dirname(__FILE__) . '/../views/' . str_replace('.', '/', $fileName) . '.php');
 
     return ob_get_clean();
-
 }
 
 /**
@@ -67,4 +66,13 @@ function logtivity_get_the_title($post_id) {
     }
 
     return $title;
+}
+
+function logtivity_get_api_url()
+{
+    if (defined('LOGTIVITY_API_URL')) {
+        return LOGTIVITY_API_URL;
+    }
+
+    return 'https://api.logtivity.io';
 }

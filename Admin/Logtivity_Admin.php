@@ -19,15 +19,32 @@ class Logtivity_Admin
 	 */
 	public function registerOptionsPage() 
 	{
-		add_management_page( 'Logtivity', 'Logtivity', 'manage_options', 'logtivity', [$this, 'content'] );
+		add_menu_page(
+			'Logtivity', 
+			'Logtivity', 
+			'manage_options', 
+			'logtivity', 
+			[$this, 'showLogIndexPage'], 
+			'dashicons-chart-area', 
+			26 
+		);
+		
+		add_submenu_page(
+			'logtivity', 
+			'Logtivity Settings', 
+			'Settings', 
+			'manage_options', 
+			'logtivity'.'-settings', 
+			[$this, 'showLogtivitySettingsPage']
+		);
 	}
 
 	/**	
-	 * Show the admin settings template
+	 * Show the admin log index
 	 * 
 	 * @return void
 	 */
-	public function content() 
+	public function showLogIndexPage()
 	{
 		if ( !current_user_can( 'manage_options' ) )  {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
@@ -35,7 +52,23 @@ class Logtivity_Admin
 
 		$options = $this->options->getOptions();
 
-		echo logtivity_view('admin', compact('options'));
+		echo logtivity_view('log-index', compact('options'));
+	}
+
+	/**	
+	 * Show the admin settings template
+	 * 
+	 * @return void
+	 */
+	public function showLogtivitySettingsPage() 
+	{
+		if ( !current_user_can( 'manage_options' ) )  {
+			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		}
+
+		$options = $this->options->getOptions();
+
+		echo logtivity_view('settings', compact('options'));
 	}
 
 	/**

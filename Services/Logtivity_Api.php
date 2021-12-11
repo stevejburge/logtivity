@@ -1,9 +1,7 @@
 <?php
 
-class Logtivity_Log_API
+class Logtivity_Api
 {
-	public $logtivityApiUrl = 'https://api.logtivity.io';
-	
 	/**
 	 * Option class to access the plugin settings
 	 * 
@@ -30,11 +28,17 @@ class Logtivity_Log_API
 	 */
 	public function getEndpoint($endpoint)
 	{
-		if (defined('LOGTIVITY_API_URL')) {
-		    return LOGTIVITY_API_URL . $endpoint;
-		}
-		
-		return $this->logtivityApiUrl . $endpoint;
+		return logtivity_get_api_url() . $endpoint;
+	}
+
+	public function post($url, $body)
+	{
+		return $this->makeRequest($url, $body, 'POST');
+	}
+
+	public function get($url, $body)
+	{
+		return $this->makeRequest($url, $body, 'GET');
 	}
 
 	/**	
@@ -56,14 +60,16 @@ class Logtivity_Log_API
 
 		$shouldLogLatestResponse = $this->waitForResponse || $this->options->shouldLogLatestResponse();
 
-		$response = wp_remote_post( $url, [
+		$response = wp_remote_post($this->getEndpoint($url), [
 			'method' => $method,
 			'timeout'   => ( $shouldLogLatestResponse ? 45 : 0.01),
 			'blocking'  => ( $shouldLogLatestResponse ? true : false),
 			'redirection' => 5,
 			'httpversion' => '1.0',
-			'headers' => array(),
-			'body' => array_merge(['api_key' => $api_key], $body),
+			'headers' => [
+				'Authorization' => 'Bearer '.$api_key
+			],
+			'body' => $body,
 			'cookies' => array()
 		]);
 

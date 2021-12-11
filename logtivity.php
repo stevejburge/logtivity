@@ -21,9 +21,10 @@ class Logtivity
 	private $dependancies = [
 		'Helpers/Helpers',
 		'Helpers/Logtivity_Wp_User',
+		'Admin/Logtivity_Log_Index_Filter',
 		'Admin/Logtivity_Options',
 		'Admin/Logtivity_Admin',
-		'Services/Logtivity_Log_API',
+		'Services/Logtivity_Api',
 		'Services/Logtivity_Logger',
 		'Helpers/Logtivity_Log_Global_Function',
 		'Logs/Logtivity_Abstract_Logger',
@@ -168,7 +169,8 @@ class Logtivity
 
 	public function loadScripts()
 	{
-		wp_enqueue_style( 'admin_css', plugin_dir_url(__FILE__) . 'assets/admin.css', false, $this->version );
+		wp_enqueue_style( 'logtivity_admin_css', plugin_dir_url(__FILE__) . 'assets/admin.css', false, $this->version );
+		wp_enqueue_script( 'logtivity_admin_js', plugin_dir_url(__FILE__) . 'assets/app.js', false, $this->version );
 	}
 }
 
