@@ -7,11 +7,46 @@ var LogtivityLogIndex = {
 
 		this.listenForPagination();
 
-		this.listenForSubmit();
-
 		this.listenForChange();
 
-		this.form.submit();
+		this.filter();
+
+		this.listenForViewLog()
+
+		this.listenForCloseModal();
+	},
+
+	listenForCloseModal: function() {
+
+		jQuery("body").on( "click", ".js-logtivity-notice-dismiss", function(e) {
+			e.preventDefault();
+
+			jQuery('.logtivity-modal').removeClass('active');
+
+		});
+
+	},
+
+	listenForViewLog: function() {
+
+		var $this = this;
+
+		jQuery("body").on( "click", ".js-logtivity-view-log", function(e) {
+			e.preventDefault();
+
+			$this.showLog(jQuery(this).next().html());
+		});
+
+	},
+
+	showLog: function(modalContent) {
+
+		console.log("showLog");
+
+		jQuery('.logtivity-modal').addClass('active');
+
+		jQuery('.logtivity-modal-content').html(modalContent);
+
 	},
 
 	listenForChange: function() {
@@ -22,6 +57,8 @@ var LogtivityLogIndex = {
 
 		jQuery("body").on( "input", "#logtivity-log-index-search-form input", function(e) {
 			e.preventDefault();
+
+			jQuery('#logtivity_page').val('');
 
 		    // Clear the timeout if it has already been set.
 		    // This will prevent the previous task from executing
@@ -55,18 +92,6 @@ var LogtivityLogIndex = {
 			e.preventDefault();
 
 			jQuery('#logtivity_page').val(jQuery(this).attr('data-page'));
-
-			$this.filter();
-		});
-
-	},
-
-	listenForSubmit: function() {
-
-		var $this = this;
-
-		jQuery("body").on( "submit", "#logtivity-log-index-search-form", function(e) {
-			e.preventDefault();
 
 			$this.filter();
 		});

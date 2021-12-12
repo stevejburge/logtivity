@@ -21,7 +21,7 @@ class Logtivity
 	private $dependancies = [
 		'Helpers/Helpers',
 		'Helpers/Logtivity_Wp_User',
-		'Admin/Logtivity_Log_Index_Filter',
+		'Admin/Logtivity_Log_Index_Controller',
 		'Admin/Logtivity_Options',
 		'Admin/Logtivity_Admin',
 		'Services/Logtivity_Api',

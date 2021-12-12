@@ -1,6 +1,6 @@
 <?php
 
-class Logtivity_Log_Index_Filter
+class Logtivity_Log_Index_Controller
 {
 	public function __construct()
 	{
@@ -27,9 +27,10 @@ class Logtivity_Log_Index_Filter
 			'view' => logtivity_view('_logs-loop', [
 				'logs' => $response->data,
 				'meta' => $response->meta,
+				'hasNextPage' => $response->links->next,
 			])
 		]);
 	}
 }
 
-new Logtivity_Log_Index_Filter;
+new Logtivity_Log_Index_Controller;

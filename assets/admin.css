@@ -11,3 +11,71 @@
 		padding-right: 10px;
 	}
 }
+.logtivity-table tbody tr:nth-child(odd) {
+	background-color: #f6f7f7;
+}
+.logtivity-table th {
+	margin-bottom: 9px;
+    padding: 15px 10px;
+    line-height: 1.3;
+    vertical-align: middle;
+}
+.logtivity-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+	background: rgba(0,0,0,.3);
+}
+.logtivity-modal.active {
+	overflow-x: hidden;
+	overflow-y: auto;
+	display: block;
+}
+.logtivity-modal-dialog {
+    transform: none;
+    width: 800px;
+    max-width: 90%;
+    margin: 3rem auto;
+    position: relative;
+    pointer-events: none;
+}
+.logtivity-modal-content {
+	position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+}
+.logtivity-modal-strip {
+	background: #0073AA;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.logtivity-modal-strip.light {
+	background: #00A0D2;
+}
+.logtivity-modal-strip {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.logtivity-modal-strip h2, .logtivity-modal-strip h3 {
+	color: white;
+}
+.logtivity-modal .notice-dismiss {
+	height: 50px;
+	width: 40px;
+}
+.logtivity-modal .notice-dismiss:before {
+	color: white;
+}
