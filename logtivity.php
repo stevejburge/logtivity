@@ -147,7 +147,7 @@ class Logtivity
 	public function addSettingsLinkFromPluginsPage($links) 
 	{
 		$settings_links = array(
-			'<a href="' . admin_url( 'tools.php?page=logtivity' ) . '">Settings</a>',
+			'<a href="' . admin_url( 'admin.php?page=logtivity-settings' ) . '">Settings</a>',
 		);
 		
 		return array_merge($settings_links, $links);

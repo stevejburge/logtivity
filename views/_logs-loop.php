@@ -34,9 +34,15 @@
 
 			<?php endforeach ?>
 		<?php else: ?>
-			<tr>
-				<td colspan="6">No results found.</td>
-			</tr>
+			<?php if (isset($message)): ?>
+				<tr>
+					<td colspan="6"><?php echo sanitize_text_field($message) ?></td>
+				</tr>
+			<?php else: ?>
+				<tr>
+					<td colspan="6">No results found.</td>
+				</tr>
+			<?php endif ?>
 		<?php endif ?>
 
 	</tbody>

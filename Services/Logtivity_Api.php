@@ -75,7 +75,7 @@ class Logtivity_Api
 
 		$response = wp_remote_retrieve_body($response);
 
-		if ($shouldLogLatestResponse && $this->notUpdatingWidgetInCustomizer()) {
+		if ($shouldLogLatestResponse && $this->notUpdatingWidgetInCustomizer() && $method === 'POST') {
 
 			$this->options->update([
 				'logtivity_latest_response' => [

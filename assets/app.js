@@ -18,10 +18,35 @@ var LogtivityLogIndex = {
 
 	listenForCloseModal: function() {
 
+		var $this = this;
+
 		jQuery("body").on( "click", ".js-logtivity-notice-dismiss", function(e) {
 			e.preventDefault();
 
-			jQuery('.logtivity-modal').removeClass('active');
+			$this.hideModal();
+
+		});
+
+		jQuery(document).on('keyup', function(e) {
+
+			if (e.key == "Escape") {
+				$this.hideModal();
+			}
+
+		});
+
+		jQuery(document).mouseup(function(e) {
+
+			if (!$this.modalOpen) {
+				return;
+			}
+
+			var container = jQuery('.logtivity-modal-dialog');
+
+			// if the target of the click isn't the container nor a descendant of the container
+			if (!container.is(e.target) && container.has(e.target).length === 0) {
+				$this.hideModal();
+			}
 
 		});
 
@@ -34,18 +59,26 @@ var LogtivityLogIndex = {
 		jQuery("body").on( "click", ".js-logtivity-view-log", function(e) {
 			e.preventDefault();
 
-			$this.showLog(jQuery(this).next().html());
+			$this.showLogModal(jQuery(this).next().html());
 		});
 
 	},
 
-	showLog: function(modalContent) {
-
-		console.log("showLog");
+	showLogModal: function(modalContent) {
 
 		jQuery('.logtivity-modal').addClass('active');
 
+		this.modalOpen = true;
+
 		jQuery('.logtivity-modal-content').html(modalContent);
+
+	},
+
+	hideModal: function() {
+
+		jQuery('.logtivity-modal').removeClass('active');
+
+		this.modalOpen = false;
 
 	},
 

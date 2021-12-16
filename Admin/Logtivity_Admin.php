@@ -106,7 +106,7 @@ class Logtivity_Admin
 	 */
 	public function settingsPageUrl()
 	{
-		return admin_url('tools.php?page=logtivity');
+		return admin_url('admin.php?page=logtivity-settings');
 	}
 
 }

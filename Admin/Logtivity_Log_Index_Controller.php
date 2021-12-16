@@ -23,6 +23,15 @@ class Logtivity_Log_Index_Controller
 			])
 		);
 
+		if ($response->message) {
+			return wp_send_json([
+				'view' => logtivity_view('_logs-loop', [
+					'message' => $response->message,
+					'logs' => [],
+				])
+			]);
+		}
+
 		return wp_send_json([
 			'view' => logtivity_view('_logs-loop', [
 				'logs' => $response->data,
