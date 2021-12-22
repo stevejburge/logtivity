@@ -14,7 +14,7 @@ class Logtivity_Api
 	 * 
 	 * @var boolean
 	 */
-	public $waitForResponse = false;
+	public $waitForResponse = true;
 
 	public function __construct()
 	{

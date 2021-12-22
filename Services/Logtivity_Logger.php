@@ -45,6 +45,14 @@ class Logtivity_Logger extends Logtivity_Api
 	 */
 	public $userMeta = [];
 
+	/**
+	 * When storing a log, generally we want to do this asynchronously
+	 * and so we won't wait for a response from the API by default.
+	 * 
+	 * @var boolean
+	 */
+	public $waitForResponse = false;
+
 	/**	
 	 * Set the user and call the parent constructor
 	 */
