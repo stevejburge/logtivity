@@ -16,22 +16,22 @@ class Logtivity_Log_Index_Controller
 
 		$response = json_decode(
 			(new Logtivity_Api)->get('/logs', [
-				'page' => $_GET['page'] ?? null,
-				'action' => $_GET['search_action'] ?? null,
-				'context' => $_GET['search_context'] ?? null,
-				'action_user' => $_GET['action_user'] ?? null,
+				'page' => $this->getInput('page'),
+				'action' => $this->getInput('search_action'),
+				'context' => $this->getInput('search_context'),
+				'action_user' => $this->getInput('action_user'),
 			])
 		);
 
 		if ($response->message) {
-			return wp_send_json([
-				'view' => logtivity_view('_logs-loop', [
-					'message' => $response->message,
-					'logs' => [],
-				])
-			]);
+			return $this->errorReponse($response->message);
 		}
 
+		return $this->successResponse($response);
+	}
+
+	private function successResponse($response)
+	{
 		return wp_send_json([
 			'view' => logtivity_view('_logs-loop', [
 				'logs' => $response->data,
@@ -39,6 +39,21 @@ class Logtivity_Log_Index_Controller
 				'hasNextPage' => $response->links->next,
 			])
 		]);
+	}
+
+	private function errorReponse($message)
+	{
+		return wp_send_json([
+			'view' => logtivity_view('_logs-loop', [
+				'message' => $message,
+				'logs' => [],
+			])
+		]);
+	}
+
+	private function getInput($field)
+	{
+		return ( isset($_GET[$field]) && is_string($_GET[$field]) ? $_GET[$field] : null);
 	}
 }
 
