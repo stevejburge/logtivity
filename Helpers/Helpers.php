@@ -44,16 +44,9 @@ function logtivity_view($fileName, $vars = array()) {
  * @return string
  */
 function logtivity_get_api_key() {
-
-    $api_key = sanitize_text_field(get_option('logtivity_site_api_key'));
-
-    if ($api_key == '') 
-    {
-        return null;
-    }
-
-    return $api_key;
-
+    return sanitize_text_field(
+        (new Logtivity_Options)->getOption('logtivity_site_api_key')
+    );
 }
 
 function logtivity_get_the_title($post_id) {

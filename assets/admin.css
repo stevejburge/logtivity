@@ -79,3 +79,8 @@
 .logtivity-modal .notice-dismiss:before {
 	color: white;
 }
+.logtivity-constant {
+    margin-top: 2px;
+    font-size: .7rem;
+    font-style: italic;
+}

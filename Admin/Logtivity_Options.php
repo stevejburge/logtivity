@@ -45,7 +45,7 @@ class Logtivity_Options
 		$options = [];
 
 		foreach ($this->settings as $setting) {
-			$options[$setting] = get_option($setting);
+			$options[$setting] = $this->getOption($setting);
 		}
 
 		return $options;
@@ -59,6 +59,10 @@ class Logtivity_Options
 	 */
 	public function getOption($key)
 	{
+		if (defined(strtoupper($key))) {
+			return constant(strtoupper($key));
+		}
+
 		if (!in_array($key, $this->settings)) {
 			return false;
 		}
