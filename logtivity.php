@@ -146,6 +146,10 @@ class Logtivity
 
 	public function addSettingsLinkFromPluginsPage($links) 
 	{
+		if (apply_filters('logtivity_hide_settings_page', false)) {
+			return $links;
+		}
+
 		$settings_links = array(
 			'<a href="' . admin_url( 'admin.php?page=logtivity-settings' ) . '">Settings</a>',
 		);
@@ -155,6 +159,10 @@ class Logtivity
 
 	public function activated()
 	{
+		if (apply_filters('logtivity_hide_settings_page', false)) {
+			return;
+		}
+
 		set_transient( 'logtivity-welcome-notice', true, 5 );
 	}
 

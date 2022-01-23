@@ -19,24 +19,28 @@ class Logtivity_Admin
 	 */
 	public function registerOptionsPage() 
 	{
-		add_menu_page(
-			'Logtivity', 
-			'Logtivity', 
-			'manage_options', 
-			'logtivity', 
-			[$this, 'showLogIndexPage'], 
-			'dashicons-chart-area', 
-			26 
-		);
+		if (!apply_filters('logtivity_hide_from_menu', false)) {
+			add_menu_page(
+				'Logtivity', 
+				'Logtivity', 
+				'manage_options', 
+				'logtivity', 
+				[$this, 'showLogIndexPage'], 
+				'dashicons-chart-area', 
+				26 
+			);
+		}
 		
-		add_submenu_page(
-			'logtivity', 
-			'Logtivity Settings', 
-			'Settings', 
-			'manage_options', 
-			'logtivity'.'-settings', 
-			[$this, 'showLogtivitySettingsPage']
-		);
+		if (!apply_filters('logtivity_hide_settings_page', false)) {
+			add_submenu_page(
+				'logtivity', 
+				'Logtivity Settings', 
+				'Settings', 
+				'manage_options', 
+				'logtivity'.'-settings', 
+				[$this, 'showLogtivitySettingsPage']
+			);
+		}
 	}
 
 	/**	

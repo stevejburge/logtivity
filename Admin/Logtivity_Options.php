@@ -59,8 +59,8 @@ class Logtivity_Options
 	 */
 	public function getOption($key)
 	{
-		if (defined(strtoupper($key))) {
-			return constant(strtoupper($key));
+		if (has_filter($key)) {
+			return apply_filters($key, false);
 		}
 
 		if (!in_array($key, $this->settings)) {
