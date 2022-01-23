@@ -280,9 +280,9 @@ Logtivity is the official brandname. When writing about this activity plugin, pl
 
 = 1.9.2 =
 
-_Release Date – Friday 21st January 2022_
+_Release Date – Sunday 23rd January 2022_
 
-* Allow the Logtivity config to be set with constants in wp-config.php
+* Allow the Logtivity config to be set via filters.
 
 = 1.9.1 =
 
